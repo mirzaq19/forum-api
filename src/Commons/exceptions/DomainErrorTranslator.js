@@ -1,0 +1,48 @@
+import InvariantError from './InvariantError.js'
+
+const DomainErrorTranslator = {
+  translate(error) {
+    return DomainErrorTranslator._directories[error.message] || error
+  }
+}
+
+DomainErrorTranslator._directories = {
+  'REGISTER_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'tidak dapat membuat user baru karena properti yang dibutuhkan tidak ada'
+  ),
+  'REGISTER_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'tidak dapat membuat user baru karena tipe data tidak sesuai'
+  ),
+  'REGISTER_USER.USERNAME_LIMIT_CHAR': new InvariantError(
+    'tidak dapat membuat user baru karena karakter username melebihi batas limit'
+  ),
+  'REGISTER_USER.USERNAME_CONTAIN_RESTRICTED_CHARACTER': new InvariantError(
+    'tidak dapat membuat user baru karena username mengandung karakter terlarang'
+  ),
+  'NEW_AUTH.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'tidak dapat membuat auth baru karena properti yang dibutuhkan tidak ada'
+  ),
+  'NEW_AUTH.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'tidak dapat membuat auth baru karena tipe data tidak sesuai'
+  ),
+  'LOGIN_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'harus mengirimkan username dan password untuk login'
+  ),
+  'LOGIN_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'username dan password harus string'
+  ),
+  'REFRESH_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN':
+    new InvariantError(
+      'harus mengirimkan refresh token untuk melakukan refresh token'
+    ),
+  'REFRESH_AUTHENTICATION_USE_CASE.NOT_MEET_DATA_TYPE_SPECIFICATION':
+    new InvariantError('refresh token harus string'),
+  'DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN':
+    new InvariantError(
+      'harus mengirimkan refresh token untuk menghapus authentication'
+    ),
+  'DELETE_AUTHENTICATION_USE_CASE.NOT_MEET_DATA_TYPE_SPECIFICATION':
+    new InvariantError('refresh token harus string')
+}
+
+export default DomainErrorTranslator
