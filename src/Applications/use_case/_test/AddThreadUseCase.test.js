@@ -1,5 +1,5 @@
-import AddedThread from '../../../Domains/thread/entities/AddedThread.js'
-import ThreadRepository from '../../../Domains/thread/ThreadRepository.js'
+import AddedThread from '../../../Domains/threads/entities/AddedThread.js'
+import ThreadRepository from '../../../Domains/threads/ThreadRepository.js'
 import UserRepository from '../../../Domains/users/UserRepository.js'
 import AddThreadUseCase from '../AddThreadUseCase.js'
 

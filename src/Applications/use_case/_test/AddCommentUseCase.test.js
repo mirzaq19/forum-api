@@ -1,6 +1,6 @@
 import NewComment from '../../../Domains/comments/entities/NewComment.js'
 import AddedComment from '../../../Domains/comments/entities/AddedComment.js'
-import ThreadRepository from '../../../Domains/thread/ThreadRepository.js'
+import ThreadRepository from '../../../Domains/threads/ThreadRepository.js'
 import CommentRepository from '../../../Domains/comments/CommentRepository.js'
 import UserRepository from '../../../Domains/users/UserRepository.js'
 import InvariantError from '../../../Commons/exceptions/InvariantError.js'

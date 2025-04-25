@@ -1,6 +1,6 @@
 import ThreadsTableTestHelper from '../../../../tests/ThreadsTableTestHelper.js'
 import ThreadRepositoryPostgres from '../ThreadRepositoryPostgres.js'
-import NewThread from '../../../Domains/thread/entities/NewThread.js'
+import NewThread from '../../../Domains/threads/entities/NewThread.js'
 import pool from '../../database/postgres/pool.js'
 import NotFoundError from '../../../Commons/exceptions/NotFoundError.js'
 
