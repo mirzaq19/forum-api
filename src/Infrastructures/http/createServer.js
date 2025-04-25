@@ -3,6 +3,7 @@ import Jwt from '@hapi/jwt'
 import users from '../../Interfaces/http/api/users/index.js'
 import authentications from '../../Interfaces/http/api/authentications/index.js'
 import threads from '../../Interfaces/http/api/threads/index.js'
+import comments from '../../Interfaces/http/api/comments/index.js'
 import config from '../../Commons/config.js'
 import setupMiddleware from './middleware.js'
 
@@ -46,6 +47,10 @@ const createServer = async container => {
     },
     {
       plugin: threads,
+      options: { container }
+    },
+    {
+      plugin: comments,
       options: { container }
     }
   ])

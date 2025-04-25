@@ -407,4 +407,145 @@ describe('HTTP server', () => {
       expect(responseJson.data.addedThread).toBeDefined()
     })
   })
+  describe('when POST /threads/{threadId}/comments', () => {
+    beforeEach(async () => {
+      const passwordHash = new BcryptPasswordHash(bcrypt)
+      const plainPassword = 'secret'
+      const hashedPassword = await passwordHash.hash(plainPassword)
+      const userData = {
+        username: 'dicoding',
+        password: hashedPassword
+      }
+      await UsersTableTestHelper.addUser(userData)
+
+      await ThreadsTableTestHelper.addThread({
+        id: 'thread-123',
+        title: 'dicoding',
+        body: 'dicoding indonesia',
+        owner: 'user-123'
+      })
+    })
+
+    it('should response 401 when request not contain authentication', async () => {
+      // Arrange
+      const requestPayload = {
+        content: 'dicoding indonesia'
+      }
+      const server = await createServer(container)
+
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/threads/123/comments',
+        payload: requestPayload
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(401)
+      expect(responseJson.message).toEqual('Missing authentication')
+    })
+    it('should response 400 when request payload not contain needed property', async () => {
+      // Arrange
+      const requestPayload = {}
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/threads/123/comments',
+        payload: requestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+
+      expect(response.statusCode).toEqual(400)
+      expect(responseJson.status).toEqual('fail')
+      expect(responseJson.message).toEqual(
+        'tidak dapat membuat comment baru karena properti yang dibutuhkan tidak ada'
+      )
+    })
+    it('should response 404 when threadId not found', async () => {
+      // Arrange
+      const requestPayload = {
+        content: 'dicoding indonesia'
+      }
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/threads/123/comments',
+        payload: requestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(404)
+      expect(responseJson.status).toEqual('fail')
+      expect(responseJson.message).toEqual('thread tidak ditemukan')
+    })
+    it('should response 201 and persisted comment', async () => {
+      // Arrange
+      const requestPayload = {
+        content: 'dicoding indonesia'
+      }
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/threads/thread-123/comments',
+        payload: requestPayload,
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+
+      expect(response.statusCode).toEqual(201)
+      expect(responseJson.status).toEqual('success')
+      expect(responseJson.data.addedComment).toBeDefined()
+      expect(responseJson.data.addedComment.id).toBeDefined()
+      expect(responseJson.data.addedComment.content).toEqual(
+        requestPayload.content
+      )
+      expect(responseJson.data.addedComment.owner).toBeDefined()
+    })
+  })
 })

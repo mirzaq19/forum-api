@@ -1,0 +1,13 @@
+import CommentRepository from '../CommentRepository.js'
+
+describe('CommentRepository', () => {
+  it('should throw error when invoke abstract behavior', async () => {
+    // Arrange
+    const commentRepository = new CommentRepository()
+
+    // Action and Assert
+    await expect(commentRepository.addComment({})).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
+  })
+})

@@ -9,6 +9,9 @@ describe('ThreadRepository', () => {
     await expect(threadRepository.addThread('thread')).rejects.toThrow(
       'THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
+    await expect(
+      threadRepository.verifyAvailableThread('threadId')
+    ).rejects.toThrow('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED')
     await expect(threadRepository.getThreadById('threadId')).rejects.toThrow(
       'THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )

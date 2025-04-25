@@ -26,6 +26,9 @@ import DeleteAuthenticationUseCase from '../Applications/use_case/DeleteAuthenti
 import AddThreadUseCase from '../Applications/use_case/AddThreadUseCase.js'
 import ThreadRepository from '../Domains/thread/ThreadRepository.js'
 import ThreadRepositoryPostgres from './repository/ThreadRepositoryPostgres.js'
+import AddCommentUseCase from '../Applications/use_case/AddCommentUseCase.js'
+import CommentRepository from '../Domains/comments/CommentRepository.js'
+import CommentRepositoryPostgres from './repository/CommentRepositoryPostgres.js'
 
 // creating container
 const container = createContainer()
@@ -63,6 +66,20 @@ container.register([
   {
     key: ThreadRepository.name,
     Class: ThreadRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool
+        },
+        {
+          concrete: nanoid
+        }
+      ]
+    }
+  },
+  {
+    key: CommentRepository.name,
+    Class: CommentRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -181,6 +198,27 @@ container.register([
         {
           name: 'threadRepository',
           internal: ThreadRepository.name
+        },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name
+        }
+      ]
+    }
+  },
+  {
+    key: AddCommentUseCase.name,
+    Class: AddCommentUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name
+        },
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name
         },
         {
           name: 'userRepository',
