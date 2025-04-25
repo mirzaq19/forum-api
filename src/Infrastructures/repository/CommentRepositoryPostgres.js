@@ -1,3 +1,5 @@
+import AuthorizationError from '../../Commons/exceptions/AuthorizationError.js'
+import NotFoundError from '../../Commons/exceptions/NotFoundError.js'
 import AddedComment from '../../Domains/comments/entities/AddedComment.js'
 
 export default class CommentRepositoryPostgres {
@@ -17,5 +19,45 @@ export default class CommentRepositoryPostgres {
     const result = await this._pool.query(query)
 
     return new AddedComment({ ...result.rows[0] })
+  }
+
+  async verifyAvailableComment(id) {
+    const query = {
+      text: 'SELECT id FROM comments WHERE id = $1 AND is_deleted = false',
+      values: [id]
+    }
+
+    const result = await this._pool.query(query)
+
+    if (!result.rows.length) {
+      throw new NotFoundError('comment tidak ditemukan')
+    }
+  }
+
+  async verifyCommentOwner(commentId, owner) {
+    const query = {
+      text: 'SELECT id, owner FROM comments WHERE id = $1 AND is_deleted = false',
+      values: [commentId]
+    }
+
+    const result = await this._pool.query(query)
+
+    if (!result.rows.length) {
+      throw new NotFoundError('comment tidak ditemukan')
+    }
+
+    const comment = result.rows[0]
+    if (comment.owner !== owner) {
+      throw new AuthorizationError('anda tidak berhak mengakses resource ini')
+    }
+  }
+
+  async deleteCommentById(id) {
+    const query = {
+      text: 'UPDATE comments SET is_deleted = true WHERE id = $1',
+      values: [id]
+    }
+
+    await this._pool.query(query)
   }
 }

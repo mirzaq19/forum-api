@@ -9,5 +9,15 @@ describe('CommentRepository', () => {
     await expect(commentRepository.addComment({})).rejects.toThrow(
       'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
+
+    await expect(commentRepository.verifyAvailableComment('')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
+    await expect(commentRepository.verifyCommentOwner('', '')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
+    await expect(commentRepository.deleteCommentById('')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
   })
 })
