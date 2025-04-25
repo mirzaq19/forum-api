@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/app.js",
     "start:dev": "nodemon src/app.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --setupFiles dotenv/config --setupFiles ./tests/setup.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --setupFiles dotenv/config --setupFiles ./tests/setup.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --coverage --setupFiles dotenv/config --setupFiles ./tests/setup.js",
     "migrate": "node-pg-migrate",
     "migrate:test": "node-pg-migrate --envPath .test.env",

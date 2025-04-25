@@ -1,4 +1,5 @@
 import InvariantError from '../../Commons/exceptions/InvariantError.js'
+import NotFoundError from '../../Commons/exceptions/NotFoundError.js'
 import RegisteredUser from '../../Domains/users/entities/RegisteredUser.js'
 import UserCredential from '../../Domains/users/entities/UserCredential.js'
 import UserRepository from '../../Domains/users/UserRepository.js'
@@ -50,5 +51,18 @@ export default class UserRepositoryPostgres extends UserRepository {
     }
 
     return new UserCredential({ ...result.rows[0] })
+  }
+
+  async verifyUserExists(id) {
+    const query = {
+      text: 'SELECT id FROM users WHERE id = $1',
+      values: [id]
+    }
+
+    const result = await this._pool.query(query)
+
+    if (!result.rowCount) {
+      throw new NotFoundError('user tidak ditemukan')
+    }
   }
 }

@@ -23,6 +23,9 @@ import AuthenticationRepository from '../Domains/authentications/AuthenticationR
 import TokenManager from '../Applications/security/TokenManager.js'
 import RefreshAuthenticationUseCase from '../Applications/use_case/RefreshAuthenticationUseCase.js'
 import DeleteAuthenticationUseCase from '../Applications/use_case/DeleteAuthenticationUseCase.js'
+import AddThreadUseCase from '../Applications/use_case/AddThreadUseCase.js'
+import ThreadRepository from '../Domains/thread/ThreadRepository.js'
+import ThreadRepositoryPostgres from './repository/ThreadRepositoryPostgres.js'
 
 // creating container
 const container = createContainer()
@@ -53,6 +56,20 @@ container.register([
       dependencies: [
         {
           concrete: pool
+        }
+      ]
+    }
+  },
+  {
+    key: ThreadRepository.name,
+    Class: ThreadRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool
+        },
+        {
+          concrete: nanoid
         }
       ]
     }
@@ -151,6 +168,23 @@ container.register([
         {
           name: 'authenticationRepository',
           internal: AuthenticationRepository.name
+        }
+      ]
+    }
+  },
+  {
+    key: AddThreadUseCase.name,
+    Class: AddThreadUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name
+        },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name
         }
       ]
     }

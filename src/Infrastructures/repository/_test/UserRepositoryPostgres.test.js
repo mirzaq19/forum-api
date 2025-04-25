@@ -1,5 +1,6 @@
 import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js'
 import InvariantError from '../../../Commons/exceptions/InvariantError.js'
+import NotFoundError from '../../../Commons/exceptions/NotFoundError.js'
 import RegisterUser from '../../../Domains/users/entities/RegisterUser.js'
 import RegisteredUser from '../../../Domains/users/entities/RegisteredUser.js'
 import UserCredential from '../../../Domains/users/entities/UserCredential.js'
@@ -119,6 +120,28 @@ describe('UserRepositoryPostgres', () => {
           password: 'hashed_password'
         })
       )
+    })
+    describe('verifyUserExists function', () => {
+      it('should throw NotFoundError when user not found', async () => {
+        // Arrange
+        const userRepositoryPostgres = new UserRepositoryPostgres(pool, {})
+
+        // Action & Assert
+        await expect(
+          userRepositoryPostgres.verifyUserExists('user-123')
+        ).rejects.toThrow(NotFoundError)
+      })
+
+      it('should not throw NotFoundError when user found', async () => {
+        // Arrange
+        const userRepositoryPostgres = new UserRepositoryPostgres(pool, {})
+        await UsersTableTestHelper.addUser({ id: 'user-123' })
+
+        // Action & Assert
+        await expect(
+          userRepositoryPostgres.verifyUserExists('user-123')
+        ).resolves.not.toThrow(NotFoundError)
+      })
     })
   })
 })
