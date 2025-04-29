@@ -1,4 +1,4 @@
-export default class UserRepository {
+class UserRepository {
   async addUser(registerUser) {
     throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED')
   }
@@ -15,3 +15,5 @@ export default class UserRepository {
     throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED')
   }
 }
+
+module.exports = UserRepository

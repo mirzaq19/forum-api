@@ -1,10 +1,10 @@
-import CommentsTableTestHelper from '../../../../tests/CommentsTableTestHelper.js'
-import CommentRepositoryPostgres from '../CommentRepositoryPostgres.js'
-import NewComment from '../../../Domains/comments/entities/NewComment.js'
-import pool from '../../database/postgres/pool.js'
-import NotFoundError from '../../../Commons/exceptions/NotFoundError.js'
-import AuthorizationError from '../../../Commons/exceptions/AuthorizationError.js'
-import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js'
+const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper.js')
+const CommentRepositoryPostgres = require('../CommentRepositoryPostgres.js')
+const NewComment = require('../../../Domains/comments/entities/NewComment.js')
+const pool = require('../../database/postgres/pool.js')
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError.js')
+const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError.js')
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper.js')
 
 describe('CommentRepositoryPostgres', () => {
   afterEach(async () => {

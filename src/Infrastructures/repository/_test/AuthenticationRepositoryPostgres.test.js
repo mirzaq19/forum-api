@@ -1,7 +1,7 @@
-import AuthenticationRepositoryPostgres from '../AuthenticationRepositoryPostgres.js'
-import AuthenticationsTableTestHelper from '../../../../tests/AuthenticationsTableTestHelper.js'
-import pool from '../../database/postgres/pool.js'
-import InvariantError from '../../../Commons/exceptions/InvariantError.js'
+const AuthenticationRepositoryPostgres = require('../AuthenticationRepositoryPostgres.js')
+const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper.js')
+const pool = require('../../database/postgres/pool.js')
+const InvariantError = require('../../../Commons/exceptions/InvariantError.js')
 
 describe('AuthenticationRepositoryPostgres', () => {
   afterEach(async () => {
@@ -23,8 +23,9 @@ describe('AuthenticationRepositoryPostgres', () => {
       await authenticationRepositoryPostgres.addRefreshToken(refreshToken)
 
       // Assert
-      const authentications =
-        await AuthenticationsTableTestHelper.findToken(refreshToken)
+      const authentications = await AuthenticationsTableTestHelper.findToken(
+        refreshToken
+      )
       expect(authentications).toHaveLength(1)
     })
   })
@@ -68,8 +69,9 @@ describe('AuthenticationRepositoryPostgres', () => {
       await authenticationRepositoryPostgres.deleteRefreshToken(refreshToken)
 
       // Assert
-      const authentications =
-        await AuthenticationsTableTestHelper.findToken(refreshToken)
+      const authentications = await AuthenticationsTableTestHelper.findToken(
+        refreshToken
+      )
       expect(authentications).toHaveLength(0)
     })
   })

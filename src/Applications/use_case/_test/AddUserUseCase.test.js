@@ -1,8 +1,8 @@
-import RegisterUser from '../../../Domains/users/entities/RegisterUser.js'
-import RegisteredUser from '../../../Domains/users/entities/RegisteredUser.js'
-import UserRepository from '../../../Domains/users/UserRepository.js'
-import PasswordHash from '../../security/PasswordHash.js'
-import AddUserUseCase from '../AddUserUseCase.js'
+const RegisterUser = require('../../../Domains/users/entities/RegisterUser.js')
+const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser.js')
+const UserRepository = require('../../../Domains/users/UserRepository.js')
+const PasswordHash = require('../../security/PasswordHash.js')
+const AddUserUseCase = require('../AddUserUseCase.js')
 
 describe('AddUserUseCase', () => {
   it('should orchestrating the add user action correctly', async () => {

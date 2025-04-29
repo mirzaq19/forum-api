@@ -1,7 +1,7 @@
-import ThreadHandler from './handler.js'
-import routes from './routes.js'
+const ThreadHandler = require('./handler.js')
+const routes = require('./routes.js')
 
-export default {
+module.exports = {
   name: 'threads',
   register: (server, { container }) => {
     const threadHandler = new ThreadHandler(container)

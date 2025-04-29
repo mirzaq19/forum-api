@@ -1,10 +1,10 @@
-import ThreadsTableTestHelper from '../../../../tests/ThreadsTableTestHelper.js'
-import ThreadRepositoryPostgres from '../ThreadRepositoryPostgres.js'
-import NewThread from '../../../Domains/threads/entities/NewThread.js'
-import pool from '../../database/postgres/pool.js'
-import NotFoundError from '../../../Commons/exceptions/NotFoundError.js'
-import Thread from '../../../Domains/threads/entities/Thread.js'
-import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js'
+const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper.js')
+const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres.js')
+const NewThread = require('../../../Domains/threads/entities/NewThread.js')
+const pool = require('../../database/postgres/pool.js')
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError.js')
+const Thread = require('../../../Domains/threads/entities/Thread.js')
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper.js')
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
@@ -74,30 +74,29 @@ describe('ThreadRepositoryPostgres', () => {
     })
     it('should return thread detail correctly', async () => {
       // Arrange
-      await UsersTableTestHelper.addUser({
-        id: 'user-123qweqwe',
-        username: 'dicoding-qweqwe'
-      })
+      const userId = 'user-123'
       const threadId = 'thread-123'
+
+      await UsersTableTestHelper.addUser({ id: userId, username: 'dicoding' })
       await ThreadsTableTestHelper.addThread({
         id: threadId,
         date: '2025-04-01T12:00:00.000Z',
-        owner: 'user-123qweqwe'
+        owner: userId
       })
+
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
 
       // Action
       const thread = await threadRepositoryPostgres.getThreadById(threadId)
 
       // Assert
-      await UsersTableTestHelper.cleanTable()
       expect(thread).toEqual(
         new Thread({
           id: threadId,
           title: 'Thread Title',
           body: 'Thread Body',
           date: '2025-04-01T12:00:00.000Z',
-          username: 'dicoding-qweqwe'
+          username: 'dicoding'
         })
       )
     })

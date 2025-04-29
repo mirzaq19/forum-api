@@ -1,4 +1,4 @@
-import PasswordHash from '../PasswordHash.js'
+const PasswordHash = require('../PasswordHash.js')
 
 describe('PasswordHash interface', () => {
   it('should throw error when invoke abstract behavior', async () => {

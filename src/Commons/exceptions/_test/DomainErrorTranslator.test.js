@@ -1,5 +1,5 @@
-import DomainErrorTranslator from '../DomainErrorTranslator.js'
-import InvariantError from '../InvariantError.js'
+const DomainErrorTranslator = require('../DomainErrorTranslator.js')
+const InvariantError = require('../InvariantError.js')
 
 describe('DomainErrorTranslator', () => {
   it('should translate error correctly', () => {

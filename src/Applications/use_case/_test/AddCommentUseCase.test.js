@@ -1,10 +1,10 @@
-import NewComment from '../../../Domains/comments/entities/NewComment.js'
-import AddedComment from '../../../Domains/comments/entities/AddedComment.js'
-import ThreadRepository from '../../../Domains/threads/ThreadRepository.js'
-import CommentRepository from '../../../Domains/comments/CommentRepository.js'
-import UserRepository from '../../../Domains/users/UserRepository.js'
-import InvariantError from '../../../Commons/exceptions/InvariantError.js'
-import AddCommentUseCase from '../AddCommentUseCase.js'
+const NewComment = require('../../../Domains/comments/entities/NewComment.js')
+const AddedComment = require('../../../Domains/comments/entities/AddedComment.js')
+const ThreadRepository = require('../../../Domains/threads/ThreadRepository.js')
+const CommentRepository = require('../../../Domains/comments/CommentRepository.js')
+const UserRepository = require('../../../Domains/users/UserRepository.js')
+const InvariantError = require('../../../Commons/exceptions/InvariantError.js')
+const AddCommentUseCase = require('../AddCommentUseCase.js')
 
 describe('AddCommentUseCase', () => {
   it('should orchestrating the add comment action correctly', async () => {

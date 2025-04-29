@@ -1,7 +1,7 @@
-import NewAuth from '../../Domains/authentications/entities/NewAuth.js'
-import LoginUser from '../../Domains/users/entities/LoginUser.js'
+const NewAuth = require('../../Domains/authentications/entities/NewAuth.js')
+const LoginUser = require('../../Domains/users/entities/LoginUser.js')
 
-export default class LoginUserUseCase {
+class LoginUserUseCase {
   constructor({
     userRepository,
     tokenManager,
@@ -31,3 +31,5 @@ export default class LoginUserUseCase {
     return new NewAuth({ accessToken, refreshToken })
   }
 }
+
+module.exports = LoginUserUseCase

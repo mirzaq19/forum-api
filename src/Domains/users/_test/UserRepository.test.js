@@ -1,4 +1,4 @@
-import UserRepository from '../UserRepository.js'
+const UserRepository = require('../UserRepository.js')
 
 describe('UserRepository interface', () => {
   it('should throw error when invoke abstract behavior', async () => {

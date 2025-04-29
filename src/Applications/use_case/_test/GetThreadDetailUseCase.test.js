@@ -1,8 +1,8 @@
-import CommentRepository from '../../../Domains/comments/CommentRepository.js'
-import Comment from '../../../Domains/comments/entities/Comment.js'
-import Thread from '../../../Domains/threads/entities/Thread.js'
-import ThreadRepository from '../../../Domains/threads/ThreadRepository.js'
-import GetThreadDetailUseCase from '../GetThreadDetailUseCase.js'
+const CommentRepository = require('../../../Domains/comments/CommentRepository.js')
+const Comment = require('../../../Domains/comments/entities/Comment.js')
+const Thread = require('../../../Domains/threads/entities/Thread.js')
+const ThreadRepository = require('../../../Domains/threads/ThreadRepository.js')
+const GetThreadDetailUseCase = require('../GetThreadDetailUseCase.js')
 
 describe('GetThreadDetailUseCase', () => {
   it('should throw error when use case payload did not contain needed property', async () => {

@@ -1,12 +1,12 @@
-import pool from '../../database/postgres/pool.js'
-import bcrypt from 'bcrypt'
-import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js'
-import AuthenticationsTableTestHelper from '../../../../tests/AuthenticationsTableTestHelper.js'
-import container from '../../container.js'
-import createServer from '../createServer.js'
-import BcryptPasswordHash from '../../security/BcryptPasswordHash.js'
-import ThreadsTableTestHelper from '../../../../tests/ThreadsTableTestHelper.js'
-import CommentsTableTestHelper from '../../../../tests/CommentsTableTestHelper.js'
+const pool = require('../../database/postgres/pool.js')
+const bcrypt = require('bcrypt')
+const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper.js')
+const AuthenticationsTableTestHelper = require('../../../../tests/AuthenticationsTableTestHelper.js')
+const container = require('../../container.js')
+const createServer = require('../createServer.js')
+const BcryptPasswordHash = require('../../security/BcryptPasswordHash.js')
+const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper.js')
+const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper.js')
 
 describe('HTTP server', () => {
   afterAll(async () => {

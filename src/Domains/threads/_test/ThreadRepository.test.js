@@ -1,4 +1,4 @@
-import ThreadRepository from '../ThreadRepository.js'
+const ThreadRepository = require('../ThreadRepository.js')
 
 describe('ThreadRepository', () => {
   it('should throw error when invoke abstract behavior', async () => {

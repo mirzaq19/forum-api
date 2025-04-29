@@ -1,7 +1,7 @@
-import AddCommentUseCase from '../../../../Applications/use_case/AddCommentUseCase.js'
-import DeleteCommentUseCase from '../../../../Applications/use_case/DeleteCommentUseCase.js'
+const AddCommentUseCase = require('../../../../Applications/use_case/AddCommentUseCase.js')
+const DeleteCommentUseCase = require('../../../../Applications/use_case/DeleteCommentUseCase.js')
 
-export default class CommentHandler {
+class CommentHandler {
   constructor({ container }) {
     this._container = container
   }
@@ -45,3 +45,5 @@ export default class CommentHandler {
       .code(200)
   }
 }
+
+module.exports = CommentHandler

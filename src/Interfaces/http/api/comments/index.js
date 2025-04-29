@@ -1,7 +1,7 @@
-import CommentHandler from './handler.js'
-import routes from './routes.js'
+const CommentHandler = require('./handler.js')
+const routes = require('./routes.js')
 
-export default {
+module.exports = {
   name: 'comments',
   version: '1.0.0',
   register: (server, { container }) => {

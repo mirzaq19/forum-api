@@ -1,4 +1,4 @@
-import Comment from '../Comment.js'
+const Comment = require('../Comment.js')
 
 describe('a Comment entity', () => {
   it('should throw error when payload did not contain needed property', () => {

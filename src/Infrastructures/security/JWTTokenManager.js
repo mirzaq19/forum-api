@@ -1,8 +1,8 @@
-import TokenManager from '../../Applications/security/TokenManager.js'
-import config from '../../Commons/config.js'
-import InvariantError from '../../Commons/exceptions/InvariantError.js'
+const TokenManager = require('../../Applications/security/TokenManager.js')
+const config = require('../../Commons/config.js')
+const InvariantError = require('../../Commons/exceptions/InvariantError.js')
 
-export default class JWTTokenManager extends TokenManager {
+class JWTTokenManager extends TokenManager {
   constructor(jwt) {
     super()
     this._jwt = jwt
@@ -26,3 +26,5 @@ export default class JWTTokenManager extends TokenManager {
     }
   }
 }
+
+module.exports = JWTTokenManager

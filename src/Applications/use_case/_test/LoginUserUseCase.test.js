@@ -1,13 +1,13 @@
-import AuthenticationRepository from '../../../Domains/authentications/AuthenticationRepository.js'
-import LoginUser from '../../../Domains/users/entities/LoginUser.js'
-import UserRepository from '../../../Domains/users/UserRepository.js'
-import TokenManager from '../../security/TokenManager.js'
-import LoginUserUseCase from '../LoginUserUseCase.js'
-import AuthenticationError from '../../../Commons/exceptions/AuthenticationError.js'
-import NewAuth from '../../../Domains/authentications/entities/NewAuth.js'
-import UserCredential from '../../../Domains/users/entities/UserCredential.js'
-import PasswordHash from '../../security/PasswordHash.js'
-import InvariantError from '../../../Commons/exceptions/InvariantError.js'
+const AuthenticationRepository = require('../../../Domains/authentications/AuthenticationRepository.js')
+const LoginUser = require('../../../Domains/users/entities/LoginUser.js')
+const UserRepository = require('../../../Domains/users/UserRepository.js')
+const TokenManager = require('../../security/TokenManager.js')
+const LoginUserUseCase = require('../LoginUserUseCase.js')
+const AuthenticationError = require('../../../Commons/exceptions/AuthenticationError.js')
+const NewAuth = require('../../../Domains/authentications/entities/NewAuth.js')
+const UserCredential = require('../../../Domains/users/entities/UserCredential.js')
+const PasswordHash = require('../../security/PasswordHash.js')
+const InvariantError = require('../../../Commons/exceptions/InvariantError.js')
 
 describe('LoginUserUseCase', () => {
   it('should orchestrating the login action correctly', async () => {

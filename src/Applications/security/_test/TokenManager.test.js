@@ -1,4 +1,4 @@
-import TokenManager from '../TokenManager.js'
+const TokenManager = require('../TokenManager.js')
 
 describe('TokenManager interface', () => {
   it('should throw error when invoke abstract behavior', () => {

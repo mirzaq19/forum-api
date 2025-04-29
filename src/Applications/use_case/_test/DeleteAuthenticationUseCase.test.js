@@ -1,5 +1,5 @@
-import AuthenticationRepository from '../../../Domains/authentications/AuthenticationRepository.js'
-import DeleteAuthenticationUseCase from '../DeleteAuthenticationUseCase.js'
+const AuthenticationRepository = require('../../../Domains/authentications/AuthenticationRepository.js')
+const DeleteAuthenticationUseCase = require('../DeleteAuthenticationUseCase.js')
 
 describe('DeleteAuthenticationUseCase', () => {
   it('should throw error when payload did not contain refreshToken', async () => {

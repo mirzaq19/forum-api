@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt'
-import BcryptPasswordHash from '../BcryptPasswordHash.js'
-import AuthenticationError from '../../../Commons/exceptions/AuthenticationError.js'
+const bcrypt = require('bcrypt')
+const BcryptPasswordHash = require('../BcryptPasswordHash.js')
+const AuthenticationError = require('../../../Commons/exceptions/AuthenticationError.js')
 
 describe('BcryptPasswordHash', () => {
   describe('hash function', () => {

@@ -1,4 +1,4 @@
-import AuthenticationError from '../AuthenticationError.js'
+const AuthenticationError = require('../AuthenticationError.js')
 
 describe('AuthenticationError', () => {
   it('should create AuthenticationError correctly', () => {

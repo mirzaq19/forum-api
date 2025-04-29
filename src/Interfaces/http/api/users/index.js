@@ -1,7 +1,7 @@
-import UserHandler from './handler.js'
-import routes from './routes.js'
+const UserHandler = require('./handler.js')
+const routes = require('./routes.js')
 
-export default {
+module.exports = {
   name: 'users',
   register: (server, { container }) => {
     const userHandler = new UserHandler(container)

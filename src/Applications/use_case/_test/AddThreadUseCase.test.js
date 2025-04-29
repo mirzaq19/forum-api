@@ -1,7 +1,7 @@
-import AddedThread from '../../../Domains/threads/entities/AddedThread.js'
-import ThreadRepository from '../../../Domains/threads/ThreadRepository.js'
-import UserRepository from '../../../Domains/users/UserRepository.js'
-import AddThreadUseCase from '../AddThreadUseCase.js'
+const AddedThread = require('../../../Domains/threads/entities/AddedThread.js')
+const ThreadRepository = require('../../../Domains/threads/ThreadRepository.js')
+const UserRepository = require('../../../Domains/users/UserRepository.js')
+const AddThreadUseCase = require('../AddThreadUseCase.js')
 
 describe('AddThreadUseCase', () => {
   it('should orchestrating the add thread action correctly', async () => {
@@ -12,22 +12,20 @@ describe('AddThreadUseCase', () => {
       owner: 'user-123'
     }
 
-    const expectedAddedThread = {
-      id: 'thread-123',
-      title: useCasePayload.title,
-      owner: useCasePayload.owner
-    }
-
     /* creating dependency of usecase */
     const mockThreadRepository = new ThreadRepository()
     const mockUserRepository = new UserRepository()
 
     /* mocking needed function */
-    mockThreadRepository.addThread = jest
-      .fn()
-      .mockImplementation(() =>
-        Promise.resolve(new AddedThread(expectedAddedThread))
+    mockThreadRepository.addThread = jest.fn().mockImplementation(() =>
+      Promise.resolve(
+        new AddedThread({
+          id: 'thread-123',
+          title: useCasePayload.title,
+          owner: useCasePayload.owner
+        })
       )
+    )
     mockUserRepository.verifyUserExists = jest
       .fn()
       .mockImplementation(() => Promise.resolve())
@@ -41,7 +39,13 @@ describe('AddThreadUseCase', () => {
     const addedThread = await addThreadUseCase.execute(useCasePayload)
 
     // Assert
-    expect(addedThread).toStrictEqual(new AddedThread(expectedAddedThread))
+    expect(addedThread).toStrictEqual(
+      new AddedThread({
+        id: 'thread-123',
+        title: useCasePayload.title,
+        owner: useCasePayload.owner
+      })
+    )
     expect(mockUserRepository.verifyUserExists).toHaveBeenCalledWith(
       useCasePayload.owner
     )

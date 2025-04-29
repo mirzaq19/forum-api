@@ -1,9 +1,9 @@
-import AuthorizationError from '../../Commons/exceptions/AuthorizationError.js'
-import NotFoundError from '../../Commons/exceptions/NotFoundError.js'
-import AddedComment from '../../Domains/comments/entities/AddedComment.js'
-import Comment from '../../Domains/comments/entities/Comment.js'
+const AuthorizationError = require('../../Commons/exceptions/AuthorizationError.js')
+const NotFoundError = require('../../Commons/exceptions/NotFoundError.js')
+const AddedComment = require('../../Domains/comments/entities/AddedComment.js')
+const Comment = require('../../Domains/comments/entities/Comment.js')
 
-export default class CommentRepositoryPostgres {
+class CommentRepositoryPostgres {
   constructor(pool, idGenerator) {
     this._pool = pool
     this._idGenerator = idGenerator
@@ -84,3 +84,5 @@ export default class CommentRepositoryPostgres {
     )
   }
 }
+
+module.exports = CommentRepositoryPostgres

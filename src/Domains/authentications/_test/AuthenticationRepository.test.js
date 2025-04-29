@@ -1,4 +1,4 @@
-import AuthenticationRepository from '../AuthenticationRepository.js'
+const AuthenticationRepository = require('../AuthenticationRepository.js')
 
 describe('AuthenticationRepository interface', () => {
   it('should throw error when invoke abstract behavior', async () => {

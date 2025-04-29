@@ -1,4 +1,4 @@
-export default class UserCredential {
+class UserCredential {
   constructor(payload) {
     this._verifyPayload(payload)
     const { id, password } = payload
@@ -15,3 +15,5 @@ export default class UserCredential {
     }
   }
 }
+
+module.exports = UserCredential

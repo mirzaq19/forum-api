@@ -1,4 +1,4 @@
-export default class DeleteAuthenticationUseCase {
+class DeleteAuthenticationUseCase {
   constructor({ authenticationRepository }) {
     this._authenticationRepository = authenticationRepository
   }
@@ -25,3 +25,5 @@ export default class DeleteAuthenticationUseCase {
     }
   }
 }
+
+module.exports = DeleteAuthenticationUseCase

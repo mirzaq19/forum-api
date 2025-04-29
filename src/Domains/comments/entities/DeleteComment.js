@@ -1,4 +1,4 @@
-export default class DeleteComment {
+class DeleteComment {
   constructor({ threadId, commentId, owner }) {
     this._verifyPayload({ threadId, commentId, owner })
 
@@ -21,3 +21,5 @@ export default class DeleteComment {
     }
   }
 }
+
+module.exports = DeleteComment

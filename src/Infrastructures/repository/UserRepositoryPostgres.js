@@ -1,10 +1,10 @@
-import InvariantError from '../../Commons/exceptions/InvariantError.js'
-import NotFoundError from '../../Commons/exceptions/NotFoundError.js'
-import RegisteredUser from '../../Domains/users/entities/RegisteredUser.js'
-import UserCredential from '../../Domains/users/entities/UserCredential.js'
-import UserRepository from '../../Domains/users/UserRepository.js'
+const InvariantError = require('../../Commons/exceptions/InvariantError.js')
+const NotFoundError = require('../../Commons/exceptions/NotFoundError.js')
+const RegisteredUser = require('../../Domains/users/entities/RegisteredUser.js')
+const UserCredential = require('../../Domains/users/entities/UserCredential.js')
+const UserRepository = require('../../Domains/users/UserRepository.js')
 
-export default class UserRepositoryPostgres extends UserRepository {
+class UserRepositoryPostgres extends UserRepository {
   constructor(pool, idGenerator) {
     super()
     this._pool = pool
@@ -66,3 +66,5 @@ export default class UserRepositoryPostgres extends UserRepository {
     }
   }
 }
+
+module.exports = UserRepositoryPostgres

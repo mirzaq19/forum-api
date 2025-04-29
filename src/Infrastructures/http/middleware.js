@@ -1,5 +1,5 @@
-import ClientError from './../../Commons/exceptions/ClientError.js'
-import DomainErrorTranslator from './../../Commons/exceptions/DomainErrorTranslator.js'
+const ClientError = require('./../../Commons/exceptions/ClientError.js')
+const DomainErrorTranslator = require('./../../Commons/exceptions/DomainErrorTranslator.js')
 
 const setupMiddleware = server => {
   server.ext('onPreResponse', (request, h) => {
@@ -36,4 +36,4 @@ const setupMiddleware = server => {
   })
 }
 
-export default setupMiddleware
+module.exports = setupMiddleware

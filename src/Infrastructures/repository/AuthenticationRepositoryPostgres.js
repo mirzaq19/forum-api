@@ -1,7 +1,7 @@
-import InvariantError from '../../Commons/exceptions/InvariantError.js'
-import AuthenticationRepository from '../../Domains/authentications/AuthenticationRepository.js'
+const InvariantError = require('../../Commons/exceptions/InvariantError.js')
+const AuthenticationRepository = require('../../Domains/authentications/AuthenticationRepository.js')
 
-export default class AuthenticationRepositoryPostgres extends AuthenticationRepository {
+class AuthenticationRepositoryPostgres extends AuthenticationRepository {
   constructor(pool) {
     super()
     this._pool = pool
@@ -37,3 +37,5 @@ export default class AuthenticationRepositoryPostgres extends AuthenticationRepo
     await this._pool.query(query)
   }
 }
+
+module.exports = AuthenticationRepositoryPostgres

@@ -1,4 +1,4 @@
-export default class TokenManager {
+class TokenManager {
   generateAccessToken(payload) {
     throw new Error('TOKEN_MANAGER.METHOD_NOT_IMPLEMENTED')
   }
@@ -9,3 +9,5 @@ export default class TokenManager {
     throw new Error('TOKEN_MANAGER.METHOD_NOT_IMPLEMENTED')
   }
 }
+
+module.exports = TokenManager

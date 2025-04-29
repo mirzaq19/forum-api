@@ -1,4 +1,4 @@
-export default class NewAuth {
+class NewAuth {
   constructor(payload) {
     this._verifyPayload(payload)
     const { accessToken, refreshToken } = payload
@@ -16,3 +16,5 @@ export default class NewAuth {
     }
   }
 }
+
+module.exports = NewAuth

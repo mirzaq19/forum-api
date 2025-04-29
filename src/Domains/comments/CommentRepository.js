@@ -1,4 +1,4 @@
-export default class CommentRepository {
+class CommentRepository {
   async addComment(newComment) {
     throw new Error('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED')
   }
@@ -19,3 +19,5 @@ export default class CommentRepository {
     throw new Error('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED')
   }
 }
+
+module.exports = CommentRepository

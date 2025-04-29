@@ -1,4 +1,4 @@
-export default class Comment {
+class Comment {
   constructor(payload) {
     this._verifyPayload(payload)
 
@@ -26,3 +26,5 @@ export default class Comment {
     }
   }
 }
+
+module.exports = Comment

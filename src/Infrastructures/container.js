@@ -1,36 +1,36 @@
 /* istanbul ignore file */
 
-import { createContainer } from 'instances-container'
+const { createContainer } = require('instances-container')
 
 // external agency
-import { nanoid } from 'nanoid'
-import bcrypt from 'bcrypt'
-import pool from './database/postgres/pool.js'
-import JWT from '@hapi/jwt'
+const { nanoid } = require('nanoid')
+const bcrypt = require('bcrypt')
+const pool = require('./database/postgres/pool.js')
+const JWT = require('@hapi/jwt')
 
 // service (repository, helper, manager, etc)
-import UserRepositoryPostgres from './repository/UserRepositoryPostgres.js'
-import BcryptPasswordHash from './security/BcryptPasswordHash.js'
-import AuthenticationRepositoryPostgres from './repository/AuthenticationRepositoryPostgres.js'
-import JWTTokenManager from './security/JWTTokenManager.js'
+const UserRepositoryPostgres = require('./repository/UserRepositoryPostgres.js')
+const BcryptPasswordHash = require('./security/BcryptPasswordHash.js')
+const AuthenticationRepositoryPostgres = require('./repository/AuthenticationRepositoryPostgres.js')
+const JWTTokenManager = require('./security/JWTTokenManager.js')
 
 // use case
-import AddUserUseCase from '../Applications/use_case/AddUserUseCase.js'
-import UserRepository from '../Domains/users/UserRepository.js'
-import PasswordHash from '../Applications/security/PasswordHash.js'
-import LoginUserUseCase from '../Applications/use_case/LoginUserUseCase.js'
-import AuthenticationRepository from '../Domains/authentications/AuthenticationRepository.js'
-import TokenManager from '../Applications/security/TokenManager.js'
-import RefreshAuthenticationUseCase from '../Applications/use_case/RefreshAuthenticationUseCase.js'
-import DeleteAuthenticationUseCase from '../Applications/use_case/DeleteAuthenticationUseCase.js'
-import AddThreadUseCase from '../Applications/use_case/AddThreadUseCase.js'
-import ThreadRepository from '../Domains/threads/ThreadRepository.js'
-import ThreadRepositoryPostgres from './repository/ThreadRepositoryPostgres.js'
-import AddCommentUseCase from '../Applications/use_case/AddCommentUseCase.js'
-import CommentRepository from '../Domains/comments/CommentRepository.js'
-import CommentRepositoryPostgres from './repository/CommentRepositoryPostgres.js'
-import DeleteCommentUseCase from '../Applications/use_case/DeleteCommentUseCase.js'
-import GetThreadDetailUseCase from '../Applications/use_case/GetThreadDetailUseCase.js'
+const AddUserUseCase = require('../Applications/use_case/AddUserUseCase.js')
+const UserRepository = require('../Domains/users/UserRepository.js')
+const PasswordHash = require('../Applications/security/PasswordHash.js')
+const LoginUserUseCase = require('../Applications/use_case/LoginUserUseCase.js')
+const AuthenticationRepository = require('../Domains/authentications/AuthenticationRepository.js')
+const TokenManager = require('../Applications/security/TokenManager.js')
+const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAuthenticationUseCase.js')
+const DeleteAuthenticationUseCase = require('../Applications/use_case/DeleteAuthenticationUseCase.js')
+const AddThreadUseCase = require('../Applications/use_case/AddThreadUseCase.js')
+const ThreadRepository = require('../Domains/threads/ThreadRepository.js')
+const ThreadRepositoryPostgres = require('./repository/ThreadRepositoryPostgres.js')
+const AddCommentUseCase = require('../Applications/use_case/AddCommentUseCase.js')
+const CommentRepository = require('../Domains/comments/CommentRepository.js')
+const CommentRepositoryPostgres = require('./repository/CommentRepositoryPostgres.js')
+const DeleteCommentUseCase = require('../Applications/use_case/DeleteCommentUseCase.js')
+const GetThreadDetailUseCase = require('../Applications/use_case/GetThreadDetailUseCase.js')
 
 // creating container
 const container = createContainer()
@@ -269,4 +269,4 @@ container.register([
   }
 ])
 
-export default container
+module.exports = container

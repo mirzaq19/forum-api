@@ -1,4 +1,4 @@
-import InvariantError from './InvariantError.js'
+const InvariantError = require('./InvariantError.js')
 
 const DomainErrorTranslator = {
   translate(error) {
@@ -66,4 +66,4 @@ DomainErrorTranslator._directories = {
   )
 }
 
-export default DomainErrorTranslator
+module.exports = DomainErrorTranslator

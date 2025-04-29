@@ -1,7 +1,7 @@
-import AddThreadUseCase from '../../../../Applications/use_case/AddThreadUseCase.js'
-import GetThreadDetailUseCase from '../../../../Applications/use_case/GetThreadDetailUseCase.js'
+const AddThreadUseCase = require('../../../../Applications/use_case/AddThreadUseCase.js')
+const GetThreadDetailUseCase = require('../../../../Applications/use_case/GetThreadDetailUseCase.js')
 
-export default class ThreadHandler {
+class ThreadHandler {
   constructor(container) {
     this._container = container
   }
@@ -39,3 +39,5 @@ export default class ThreadHandler {
       .code(200)
   }
 }
+
+module.exports = ThreadHandler

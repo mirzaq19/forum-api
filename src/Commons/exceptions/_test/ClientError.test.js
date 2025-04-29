@@ -1,4 +1,4 @@
-import ClientError from '../ClientError.js'
+const ClientError = require('../ClientError.js')
 
 describe('ClientError', () => {
   it('should throw error when directly use it', () => {

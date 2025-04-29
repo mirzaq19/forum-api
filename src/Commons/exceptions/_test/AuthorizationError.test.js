@@ -1,4 +1,4 @@
-import AuthorizationError from '../AuthorizationError.js'
+const AuthorizationError = require('../AuthorizationError.js')
 
 describe('AuthorizationError', () => {
   it('should create AuthorizationError correctly', () => {

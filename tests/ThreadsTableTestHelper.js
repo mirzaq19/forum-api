@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import pool from '../src/Infrastructures/database/postgres/pool.js'
+const pool = require('../src/Infrastructures/database/postgres/pool.js')
 
 const ThreadsTableTestHelper = {
   async addThread({
@@ -43,4 +43,4 @@ const ThreadsTableTestHelper = {
   }
 }
 
-export default ThreadsTableTestHelper
+module.exports = ThreadsTableTestHelper

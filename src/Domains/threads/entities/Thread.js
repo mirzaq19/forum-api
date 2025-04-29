@@ -1,4 +1,4 @@
-export default class Thread {
+class Thread {
   constructor(payload) {
     this._verifyPayload(payload)
 
@@ -37,3 +37,5 @@ export default class Thread {
     this.comments = comments
   }
 }
+
+module.exports = Thread

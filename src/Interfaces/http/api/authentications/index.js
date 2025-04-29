@@ -1,7 +1,7 @@
-import AuthenticationHandler from './handler.js'
-import routes from './routes.js'
+const AuthenticationHandler = require('./handler.js')
+const routes = require('./routes.js')
 
-export default {
+module.exports = {
   name: 'authentications',
   register: (server, { container }) => {
     const authenticationHandler = new AuthenticationHandler(container)

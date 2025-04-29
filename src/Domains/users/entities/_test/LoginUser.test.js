@@ -1,4 +1,4 @@
-import LoginUser from '../LoginUser.js'
+const LoginUser = require('../LoginUser.js')
 
 describe('a LoginUser entities', () => {
   it('should throw error when payload did not contain needed property', () => {

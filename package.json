@@ -1,14 +1,14 @@
 {
-  "name": "auth-api",
+  "name": "forum-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node src/app.js",
     "start:dev": "nodemon src/app.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --setupFiles dotenv/config --setupFiles ./tests/setup.js",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --coverage --setupFiles dotenv/config --setupFiles ./tests/setup.js",
+    "test": "jest --coverage --setupFiles dotenv/config",
+    "test:watch": "jest --watchAll --coverage --setupFiles dotenv/config",
     "migrate": "node-pg-migrate",
     "migrate:test": "node-pg-migrate --envPath .test.env",
     "lint": "eslint src",
@@ -23,7 +23,7 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
     "instances-container": "^2.0.6",
-    "nanoid": "^5.1.5",
+    "nanoid": "^3.3.11",
     "pg": "^8.14.1"
   },
   "devDependencies": {

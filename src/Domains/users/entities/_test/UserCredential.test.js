@@ -1,4 +1,4 @@
-import UserCredential from '../UserCredential.js'
+const UserCredential = require('../UserCredential.js')
 
 describe('an UserCredential entities', () => {
   it('should throw error when payload did not contain needed property', () => {

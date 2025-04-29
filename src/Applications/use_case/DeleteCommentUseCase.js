@@ -1,6 +1,6 @@
-import DeleteComment from '../../Domains/comments/entities/DeleteComment.js'
+const DeleteComment = require('../../Domains/comments/entities/DeleteComment.js')
 
-export default class DeleteCommentUseCase {
+class DeleteCommentUseCase {
   constructor({ userRepository, threadRepository, commentRepository }) {
     this._userRepository = userRepository
     this._threadRepository = threadRepository
@@ -18,3 +18,5 @@ export default class DeleteCommentUseCase {
     await this._commentRepository.deleteCommentById(commentId)
   }
 }
+
+module.exports = DeleteCommentUseCase

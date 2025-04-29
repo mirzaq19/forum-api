@@ -1,11 +1,11 @@
-import Hapi from '@hapi/hapi'
-import Jwt from '@hapi/jwt'
-import users from '../../Interfaces/http/api/users/index.js'
-import authentications from '../../Interfaces/http/api/authentications/index.js'
-import threads from '../../Interfaces/http/api/threads/index.js'
-import comments from '../../Interfaces/http/api/comments/index.js'
-import config from '../../Commons/config.js'
-import setupMiddleware from './middleware.js'
+const Hapi = require('@hapi/hapi')
+const Jwt = require('@hapi/jwt')
+const users = require('../../Interfaces/http/api/users/index.js')
+const authentications = require('../../Interfaces/http/api/authentications/index.js')
+const threads = require('../../Interfaces/http/api/threads/index.js')
+const comments = require('../../Interfaces/http/api/comments/index.js')
+const config = require('../../Commons/config.js')
+const setupMiddleware = require('./middleware.js')
 
 const createServer = async container => {
   const server = Hapi.server({
@@ -60,4 +60,4 @@ const createServer = async container => {
   return server
 }
 
-export default createServer
+module.exports = createServer

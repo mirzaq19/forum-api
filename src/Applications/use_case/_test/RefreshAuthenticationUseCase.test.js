@@ -1,6 +1,6 @@
-import AuthenticationRepository from '../../../Domains/authentications/AuthenticationRepository.js'
-import TokenManager from '../../security/TokenManager.js'
-import RefreshAuthenticationUseCase from '../RefreshAuthenticationUseCase.js'
+const AuthenticationRepository = require('../../../Domains/authentications/AuthenticationRepository.js')
+const TokenManager = require('../../security/TokenManager.js')
+const RefreshAuthenticationUseCase = require('../RefreshAuthenticationUseCase.js')
 
 describe('RefreshAuthenticationUseCase', () => {
   it('should throw error when payload did not contain refreshToken', async () => {

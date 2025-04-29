@@ -1,6 +1,6 @@
-import NewComment from '../../Domains/comments/entities/NewComment.js'
+const NewComment = require('../../Domains/comments/entities/NewComment.js')
 
-export default class AddCommentUseCase {
+class AddCommentUseCase {
   constructor({ threadRepository, commentRepository, userRepository }) {
     this._userRepository = userRepository
     this._threadRepository = threadRepository
@@ -15,3 +15,5 @@ export default class AddCommentUseCase {
     return this._commentRepository.addComment(newComment)
   }
 }
+
+module.exports = AddCommentUseCase

@@ -1,4 +1,4 @@
-export default class GetThreadDetailUseCase {
+class GetThreadDetailUseCase {
   constructor({ threadRepository, commentRepository }) {
     this._threadRepository = threadRepository
     this._commentRepository = commentRepository
@@ -28,3 +28,5 @@ export default class GetThreadDetailUseCase {
     }
   }
 }
+
+module.exports = GetThreadDetailUseCase

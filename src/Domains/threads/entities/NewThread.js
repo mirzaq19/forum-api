@@ -1,4 +1,4 @@
-export default class Newthread {
+class Newthread {
   constructor(payload) {
     this._verifyPayload(payload)
     const { title, body, owner } = payload
@@ -26,3 +26,5 @@ export default class Newthread {
     }
   }
 }
+
+module.exports = Newthread
