@@ -19,5 +19,8 @@ describe('CommentRepository', () => {
     await expect(commentRepository.deleteCommentById('')).rejects.toThrow(
       'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
+    await expect(commentRepository.getCommentsByThreadId('')).rejects.toThrow(
+      'COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
   })
 })

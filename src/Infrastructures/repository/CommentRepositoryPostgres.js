@@ -1,6 +1,7 @@
 import AuthorizationError from '../../Commons/exceptions/AuthorizationError.js'
 import NotFoundError from '../../Commons/exceptions/NotFoundError.js'
 import AddedComment from '../../Domains/comments/entities/AddedComment.js'
+import Comment from '../../Domains/comments/entities/Comment.js'
 
 export default class CommentRepositoryPostgres {
   constructor(pool, idGenerator) {
@@ -59,5 +60,27 @@ export default class CommentRepositoryPostgres {
     }
 
     await this._pool.query(query)
+  }
+
+  async getCommentsByThreadId(threadId) {
+    const query = {
+      text: `
+        SELECT c.id, c.content, c.date, u.username, c.is_deleted
+        FROM comments AS c
+        JOIN users AS u ON c.owner = u.id
+        WHERE c.thread_id = $1
+        ORDER BY c.date ASC
+      `,
+      values: [threadId]
+    }
+
+    const result = await this._pool.query(query)
+    return result.rows.map(
+      row =>
+        new Comment({
+          ...row,
+          date: row.date.toISOString()
+        })
+    )
   }
 }

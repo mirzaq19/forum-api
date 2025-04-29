@@ -715,4 +715,85 @@ describe('HTTP server', () => {
       expect(responseJson.status).toEqual('success')
     })
   })
+  describe('when GET /threads/{threadId}', () => {
+    beforeEach(async () => {
+      const passwordHash = new BcryptPasswordHash(bcrypt)
+      const plainPassword = 'secret'
+      const hashedPassword = await passwordHash.hash(plainPassword)
+      const user1Data = {
+        id: 'user-123',
+        username: 'dicoding',
+        password: hashedPassword
+      }
+      const user2Data = {
+        id: 'user-124',
+        username: 'dicoding2',
+        password: hashedPassword
+      }
+      await UsersTableTestHelper.addUser(user1Data)
+      await UsersTableTestHelper.addUser(user2Data)
+
+      await ThreadsTableTestHelper.addThread({
+        id: 'thread-123',
+        title: 'dicoding',
+        body: 'dicoding indonesia',
+        owner: 'user-123'
+      })
+
+      await CommentsTableTestHelper.addComment({
+        id: 'comment-123',
+        threadId: 'thread-123',
+        content: 'dicoding indonesia',
+        owner: 'user-124'
+      })
+      await CommentsTableTestHelper.addComment({
+        id: 'comment-124',
+        threadId: 'thread-123',
+        content: 'dicoding indonesia',
+        owner: 'user-123'
+      })
+    })
+
+    it('should response 404 when threadId not found', async () => {
+      // Arrange
+      const server = await createServer(container)
+
+      // Action
+      const response = await server.inject({
+        method: 'GET',
+        url: '/threads/123'
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(404)
+      expect(responseJson.status).toEqual('fail')
+      expect(responseJson.message).toEqual('thread tidak ditemukan')
+    })
+    it('should response 200 and return thread detail', async () => {
+      // Arrange
+      const server = await createServer(container)
+
+      // Action
+      const response = await server.inject({
+        method: 'GET',
+        url: '/threads/thread-123'
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(200)
+      expect(responseJson.status).toEqual('success')
+      expect(responseJson.data.thread).toBeDefined()
+      expect(responseJson.data.thread.id).toEqual('thread-123')
+      expect(responseJson.data.thread.title).toEqual('dicoding')
+      expect(responseJson.data.thread.body).toEqual('dicoding indonesia')
+      expect(responseJson.data.thread.date).toBeDefined()
+      expect(responseJson.data.thread.username).toEqual('dicoding')
+      expect(responseJson.data.thread.comments).toBeDefined()
+      expect(responseJson.data.thread.comments).toHaveLength(2)
+      expect(responseJson.data.thread.comments[0].username).toEqual('dicoding2')
+      expect(responseJson.data.thread.comments[1].username).toEqual('dicoding')
+    })
+  })
 })

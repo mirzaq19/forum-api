@@ -4,10 +4,12 @@ import NewComment from '../../../Domains/comments/entities/NewComment.js'
 import pool from '../../database/postgres/pool.js'
 import NotFoundError from '../../../Commons/exceptions/NotFoundError.js'
 import AuthorizationError from '../../../Commons/exceptions/AuthorizationError.js'
+import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js'
 
 describe('CommentRepositoryPostgres', () => {
   afterEach(async () => {
     await CommentsTableTestHelper.cleanTable()
+    await UsersTableTestHelper.cleanTable()
   })
 
   afterAll(async () => {
@@ -115,6 +117,38 @@ describe('CommentRepositoryPostgres', () => {
       const comments = await CommentsTableTestHelper.findCommentsById(commentId)
       expect(comments).toHaveLength(1)
       expect(comments[0].is_deleted).toEqual(true)
+    })
+  })
+  describe('getCommentsByThreadId function', () => {
+    it('should return empty array when no comments', async () => {
+      // Arrange
+      const threadId = 'thread-123'
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {})
+
+      // Action
+      const comments = await commentRepositoryPostgres.getCommentsByThreadId(
+        threadId
+      )
+
+      // Assert
+      expect(comments).toHaveLength(0)
+    })
+
+    it('should return comments by thread id', async () => {
+      // Arrange
+      await UsersTableTestHelper.addUser({ id: 'user-123' })
+      const threadId = 'thread-123'
+      await CommentsTableTestHelper.addComment({ threadId, owner: 'user-123' })
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {})
+
+      // Action
+      const comments = await commentRepositoryPostgres.getCommentsByThreadId(
+        threadId
+      )
+
+      // Assert
+      await UsersTableTestHelper.cleanTable()
+      expect(comments).toHaveLength(1)
     })
   })
 })

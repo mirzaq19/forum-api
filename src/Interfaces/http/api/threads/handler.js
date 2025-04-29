@@ -1,4 +1,5 @@
 import AddThreadUseCase from '../../../../Applications/use_case/AddThreadUseCase.js'
+import GetThreadDetailUseCase from '../../../../Applications/use_case/GetThreadDetailUseCase.js'
 
 export default class ThreadHandler {
   constructor(container) {
@@ -20,5 +21,21 @@ export default class ThreadHandler {
         }
       })
       .code(201)
+  }
+
+  async getThreadHandler(request, h) {
+    const { threadId } = request.params
+    const getThreadDetailUseCase = this._container.getInstance(
+      GetThreadDetailUseCase.name
+    )
+    const thread = await getThreadDetailUseCase.execute({ threadId })
+    return h
+      .response({
+        status: 'success',
+        data: {
+          thread
+        }
+      })
+      .code(200)
   }
 }

@@ -3,10 +3,13 @@ import ThreadRepositoryPostgres from '../ThreadRepositoryPostgres.js'
 import NewThread from '../../../Domains/threads/entities/NewThread.js'
 import pool from '../../database/postgres/pool.js'
 import NotFoundError from '../../../Commons/exceptions/NotFoundError.js'
+import Thread from '../../../Domains/threads/entities/Thread.js'
+import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js'
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
     await ThreadsTableTestHelper.cleanTable()
+    await UsersTableTestHelper.cleanTable()
   })
 
   afterAll(async () => {
@@ -57,6 +60,46 @@ describe('ThreadRepositoryPostgres', () => {
       await expect(
         threadRepositoryPostgres.verifyAvailableThread(threadId)
       ).resolves.not.toThrow(NotFoundError)
+    })
+  })
+  describe('getThreadById function', () => {
+    it('should throw NotFoundError when thread not found', async () => {
+      // Arrange
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
+
+      // Action and Assert
+      await expect(
+        threadRepositoryPostgres.getThreadById('thread-123')
+      ).rejects.toThrow(NotFoundError)
+    })
+    it('should return thread detail correctly', async () => {
+      // Arrange
+      await UsersTableTestHelper.addUser({
+        id: 'user-123qweqwe',
+        username: 'dicoding-qweqwe'
+      })
+      const threadId = 'thread-123'
+      await ThreadsTableTestHelper.addThread({
+        id: threadId,
+        date: '2025-04-01T12:00:00.000Z',
+        owner: 'user-123qweqwe'
+      })
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {})
+
+      // Action
+      const thread = await threadRepositoryPostgres.getThreadById(threadId)
+
+      // Assert
+      await UsersTableTestHelper.cleanTable()
+      expect(thread).toEqual(
+        new Thread({
+          id: threadId,
+          title: 'Thread Title',
+          body: 'Thread Body',
+          date: '2025-04-01T12:00:00.000Z',
+          username: 'dicoding-qweqwe'
+        })
+      )
     })
   })
 })

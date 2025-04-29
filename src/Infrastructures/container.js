@@ -30,6 +30,7 @@ import AddCommentUseCase from '../Applications/use_case/AddCommentUseCase.js'
 import CommentRepository from '../Domains/comments/CommentRepository.js'
 import CommentRepositoryPostgres from './repository/CommentRepositoryPostgres.js'
 import DeleteCommentUseCase from '../Applications/use_case/DeleteCommentUseCase.js'
+import GetThreadDetailUseCase from '../Applications/use_case/GetThreadDetailUseCase.js'
 
 // creating container
 const container = createContainer()
@@ -245,6 +246,23 @@ container.register([
         {
           name: 'userRepository',
           internal: UserRepository.name
+        }
+      ]
+    }
+  },
+  {
+    key: GetThreadDetailUseCase.name,
+    Class: GetThreadDetailUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name
+        },
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name
         }
       ]
     }
