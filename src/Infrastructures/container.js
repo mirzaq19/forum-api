@@ -13,6 +13,9 @@ const UserRepositoryPostgres = require('./repository/UserRepositoryPostgres.js')
 const BcryptPasswordHash = require('./security/BcryptPasswordHash.js')
 const AuthenticationRepositoryPostgres = require('./repository/AuthenticationRepositoryPostgres.js')
 const JWTTokenManager = require('./security/JWTTokenManager.js')
+const ThreadRepositoryPostgres = require('./repository/ThreadRepositoryPostgres.js')
+const CommentRepositoryPostgres = require('./repository/CommentRepositoryPostgres.js')
+const ReplyRepositoryPostgres = require('./repository/ReplyRepositoryPostgres.js')
 
 // use case
 const AddUserUseCase = require('../Applications/use_case/AddUserUseCase.js')
@@ -25,12 +28,12 @@ const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAu
 const DeleteAuthenticationUseCase = require('../Applications/use_case/DeleteAuthenticationUseCase.js')
 const AddThreadUseCase = require('../Applications/use_case/AddThreadUseCase.js')
 const ThreadRepository = require('../Domains/threads/ThreadRepository.js')
-const ThreadRepositoryPostgres = require('./repository/ThreadRepositoryPostgres.js')
 const AddCommentUseCase = require('../Applications/use_case/AddCommentUseCase.js')
 const CommentRepository = require('../Domains/comments/CommentRepository.js')
-const CommentRepositoryPostgres = require('./repository/CommentRepositoryPostgres.js')
 const DeleteCommentUseCase = require('../Applications/use_case/DeleteCommentUseCase.js')
 const GetThreadDetailUseCase = require('../Applications/use_case/GetThreadDetailUseCase.js')
+const ReplyRepository = require('../Domains/replies/ReplyRepository.js')
+const AddReplyUseCase = require('../Applications/use_case/AddReplyUseCase.js')
 
 // creating container
 const container = createContainer()
@@ -82,6 +85,20 @@ container.register([
   {
     key: CommentRepository.name,
     Class: CommentRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool
+        },
+        {
+          concrete: nanoid
+        }
+      ]
+    }
+  },
+  {
+    key: ReplyRepository.name,
+    Class: ReplyRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -263,6 +280,31 @@ container.register([
         {
           name: 'commentRepository',
           internal: CommentRepository.name
+        }
+      ]
+    }
+  },
+  {
+    key: AddReplyUseCase.name,
+    Class: AddReplyUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'userRepository',
+          internal: UserRepository.name
+        },
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name
+        },
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name
+        },
+        {
+          name: 'replyRepository',
+          internal: ReplyRepository.name
         }
       ]
     }
