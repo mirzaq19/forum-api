@@ -6,6 +6,14 @@ const routes = handler => [
     options: {
       auth: 'forumapi_jwt'
     }
+  },
+  {
+    method: 'DELETE',
+    path: '/threads/{threadId}/comments/{commentId}/replies/{replyId}',
+    handler: (request, h) => handler.deleteReplyHandler(request, h),
+    options: {
+      auth: 'forumapi_jwt'
+    }
   }
 ]
 

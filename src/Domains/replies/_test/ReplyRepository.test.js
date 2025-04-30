@@ -12,6 +12,9 @@ describe('ReplyRepository', () => {
     await expect(replyRepository.addReply({})).rejects.toThrow(
       'REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
+    await expect(replyRepository.verifyAvailableReply('')).rejects.toThrow(
+      'REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    )
     await expect(replyRepository.verifyReplyOwner('', '')).rejects.toThrow(
       'REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
