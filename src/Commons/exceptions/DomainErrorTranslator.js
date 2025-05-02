@@ -64,11 +64,29 @@ DomainErrorTranslator._directories = {
   'DELETE_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
     'tidak dapat menghapus comment karena tipe data tidak sesuai'
   ),
+  'COMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'comment tidak mengandung properti yang dibutuhkan'
+  ),
+  'COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'comment tidak memenuhi spesifikasi tipe data'
+  ),
   'NEW_REPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
     'tidak dapat membuat balasan baru karena properti yang dibutuhkan tidak ada'
   ),
   'NEW_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
     'tidak dapat membuat balasan baru karena tipe data tidak sesuai'
+  ),
+  'DELETE_REPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'tidak dapat menghapus balasan karena properti yang dibutuhkan tidak ada'
+  ),
+  'DELETE_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'tidak dapat menghapus balasan karena tipe data tidak sesuai'
+  ),
+  'REPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'balasan tidak mengandung properti yang dibutuhkan'
+  ),
+  'REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'balasan tidak memenuhi spesifikasi tipe data'
   )
 }
 
