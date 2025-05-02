@@ -69,6 +69,16 @@ describe('GetThreadDetailUseCase', () => {
       is_deleted: false
     }
 
+    const expectedComment = new Comment(mockComment)
+    expectedComment.setReplies([
+      new Reply({
+        ...mockReply,
+        date: mockReply.date.toISOString()
+      })
+    ])
+    const expectedThreadDetail = new Thread(mockThread)
+    expectedThreadDetail.setComments([expectedComment])
+
     /* creating dependency of usecase */
     const mockThreadRepository = new ThreadRepository()
     const mockCommentRepository = new CommentRepository()
@@ -101,30 +111,7 @@ describe('GetThreadDetailUseCase', () => {
     expect(mockCommentRepository.getCommentsByThreadId).toHaveBeenCalledWith(
       useCasePayload.threadId
     )
-    expect(threadDetail).toEqual({
-      id: mockThread.id,
-      title: mockThread.title,
-      body: mockThread.body,
-      date: mockThread.date,
-      username: mockThread.username,
-      comments: [
-        {
-          id: mockComment.id,
-          username: mockComment.username,
-          date: mockComment.date,
-          content: mockComment.content,
-          replies: [
-            new Reply({
-              id: 'reply-123',
-              content: 'This is a reply',
-              date: '2023-10-01T12:00:00.000Z',
-              username: 'dicoding',
-              is_deleted: false
-            })
-          ]
-        }
-      ]
-    })
+    expect(threadDetail).toStrictEqual(expectedThreadDetail)
     expect(threadDetail).toBeInstanceOf(Object)
     expect(threadDetail).toHaveProperty('id')
     expect(threadDetail).toHaveProperty('title')
