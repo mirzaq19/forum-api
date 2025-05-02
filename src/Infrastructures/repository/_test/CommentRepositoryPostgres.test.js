@@ -159,6 +159,10 @@ describe('CommentRepositoryPostgres', () => {
       // Assert
       await UsersTableTestHelper.cleanTable()
       expect(comments).toHaveLength(1)
+      expect(comments[0]).toHaveProperty('id', 'comment-123')
+      expect(comments[0]).toHaveProperty('content', 'Comment Body')
+      expect(comments[0]).toHaveProperty('date')
+      expect(comments[0]).toHaveProperty('username', 'dicoding')
     })
   })
 })
