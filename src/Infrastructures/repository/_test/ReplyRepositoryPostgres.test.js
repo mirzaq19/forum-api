@@ -4,6 +4,7 @@ const RepliesTableTestHelper = require('../../../../tests/RepliesTableTesHelper.
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper.js')
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError.js')
 const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError.js')
+const AddedReply = require('../../../Domains/replies/entities/AddedReply.js')
 
 describe('ReplyRepositoryPostgres', () => {
   afterEach(async () => {
@@ -16,28 +17,6 @@ describe('ReplyRepositoryPostgres', () => {
   })
 
   describe('getRepliesByCommentIds function', () => {
-    it('should throw error when commentIds is not an array', async () => {
-      // Arrange
-      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {})
-      const commentIds = 'not-an-array'
-
-      // Action and Assert
-      await expect(
-        replyRepositoryPostgres.getRepliesByCommentIds(commentIds)
-      ).rejects.toThrow(
-        'REPLY_REPOSITORY.GET_REPLIES_BY_COMMENT_IDS.NOT_AN_ARRAY'
-      )
-    })
-    it('should throw error when commentIds is an empty array', async () => {
-      // Arrange
-      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {})
-      const commentIds = []
-
-      // Action and Assert
-      expect(
-        replyRepositoryPostgres.getRepliesByCommentIds(commentIds)
-      ).resolves.toEqual([])
-    })
     it('should return empty array when no replies found', async () => {
       // Arrange
       const commentId = 'comment-123'
@@ -92,11 +71,18 @@ describe('ReplyRepositoryPostgres', () => {
       )
 
       // Action
-      await replyRepositoryPostgres.addReply(newReply)
+      const addedReply = await replyRepositoryPostgres.addReply(newReply)
 
       // Assert
       const replies = await RepliesTableTestHelper.findRepliesById('reply-123')
       expect(replies).toHaveLength(1)
+      expect(addedReply).toStrictEqual(
+        new AddedReply({
+          id: 'reply-123',
+          content: newReply.content,
+          owner: newReply.owner
+        })
+      )
     })
   })
 

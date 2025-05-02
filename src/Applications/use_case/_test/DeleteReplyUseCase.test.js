@@ -41,6 +41,12 @@ describe('DeleteReplyUseCase', () => {
     await expect(addReplyUseCase.execute(useCasePayload)).rejects.toThrow(
       NotFoundError
     )
+    expect(mockUserRepository.verifyUserExists).toHaveBeenCalledWith(
+      useCasePayload.owner
+    )
+    expect(mockThreadRepository.verifyAvailableThread).toHaveBeenCalledWith(
+      useCasePayload.threadId
+    )
   })
   it('should throw NotFoundError when comment not found', async () => {
     // Arrange
@@ -79,6 +85,15 @@ describe('DeleteReplyUseCase', () => {
     // Action and Assert
     await expect(addReplyUseCase.execute(useCasePayload)).rejects.toThrow(
       NotFoundError
+    )
+    expect(mockUserRepository.verifyUserExists).toHaveBeenCalledWith(
+      useCasePayload.owner
+    )
+    expect(mockThreadRepository.verifyAvailableThread).toHaveBeenCalledWith(
+      useCasePayload.threadId
+    )
+    expect(mockCommentRepository.verifyAvailableComment).toHaveBeenCalledWith(
+      useCasePayload.commentId
     )
   })
 
@@ -123,6 +138,18 @@ describe('DeleteReplyUseCase', () => {
     // Action and Assert
     await expect(addReplyUseCase.execute(useCasePayload)).rejects.toThrow(
       NotFoundError
+    )
+    expect(mockUserRepository.verifyUserExists).toHaveBeenCalledWith(
+      useCasePayload.owner
+    )
+    expect(mockThreadRepository.verifyAvailableThread).toHaveBeenCalledWith(
+      useCasePayload.threadId
+    )
+    expect(mockCommentRepository.verifyAvailableComment).toHaveBeenCalledWith(
+      useCasePayload.commentId
+    )
+    expect(mockReplyRepository.verifyAvailableReply).toHaveBeenCalledWith(
+      useCasePayload.replyId
     )
   })
 

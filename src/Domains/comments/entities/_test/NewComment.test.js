@@ -37,8 +37,10 @@ describe('a NewComment entity', () => {
     const newComment = new NewComment(payload)
 
     // Assert
+    expect(newComment).toHaveProperty('threadId')
     expect(newComment).toHaveProperty('content')
     expect(newComment).toHaveProperty('owner')
+    expect(newComment.threadId).toEqual(payload.threadId)
     expect(newComment.content).toEqual(payload.content)
     expect(newComment.owner).toEqual(payload.owner)
   })

@@ -5,6 +5,7 @@ const pool = require('../../database/postgres/pool.js')
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError.js')
 const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError.js')
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper.js')
+const AddedComment = require('../../../Domains/comments/entities/AddedComment.js')
 
 describe('CommentRepositoryPostgres', () => {
   afterEach(async () => {
@@ -31,13 +32,22 @@ describe('CommentRepositoryPostgres', () => {
       )
 
       // Action
-      await commentRepositoryPostgres.addComment(newComment)
+      const addedComment = await commentRepositoryPostgres.addComment(
+        newComment
+      )
 
       // Assert
       const comments = await CommentsTableTestHelper.findCommentsById(
         'comment-123'
       )
       expect(comments).toHaveLength(1)
+      expect(addedComment).toStrictEqual(
+        new AddedComment({
+          id: 'comment-123',
+          content: newComment.content,
+          owner: newComment.owner
+        })
+      )
     })
   })
   describe('verifyAvailableComment function', () => {

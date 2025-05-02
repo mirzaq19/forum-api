@@ -1,10 +1,12 @@
 const AuthorizationError = require('../../Commons/exceptions/AuthorizationError.js')
 const NotFoundError = require('../../Commons/exceptions/NotFoundError.js')
+const CommentRepository = require('../../Domains/comments/CommentRepository.js')
 const AddedComment = require('../../Domains/comments/entities/AddedComment.js')
 const Comment = require('../../Domains/comments/entities/Comment.js')
 
-class CommentRepositoryPostgres {
+class CommentRepositoryPostgres extends CommentRepository {
   constructor(pool, idGenerator) {
+    super()
     this._pool = pool
     this._idGenerator = idGenerator
   }

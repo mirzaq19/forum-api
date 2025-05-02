@@ -5,6 +5,7 @@ const pool = require('../../database/postgres/pool.js')
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError.js')
 const Thread = require('../../../Domains/threads/entities/Thread.js')
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper.js')
+const AddedThread = require('../../../Domains/threads/entities/AddedThread.js')
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
@@ -31,11 +32,18 @@ describe('ThreadRepositoryPostgres', () => {
       )
 
       // Action
-      await threadRepositoryPostgres.addThread(newThread)
+      const addedThread = await threadRepositoryPostgres.addThread(newThread)
 
       // Assert
       const threads = await ThreadsTableTestHelper.findThreadsById('thread-123')
       expect(threads).toHaveLength(1)
+      expect(addedThread).toStrictEqual(
+        new AddedThread({
+          id: 'thread-123',
+          title: newThread.title,
+          owner: newThread.owner
+        })
+      )
     })
   })
 

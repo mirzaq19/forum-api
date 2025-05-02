@@ -3,7 +3,7 @@ const AddedComment = require('../../../Domains/comments/entities/AddedComment.js
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository.js')
 const CommentRepository = require('../../../Domains/comments/CommentRepository.js')
 const UserRepository = require('../../../Domains/users/UserRepository.js')
-const InvariantError = require('../../../Commons/exceptions/InvariantError.js')
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError.js')
 const AddCommentUseCase = require('../AddCommentUseCase.js')
 
 describe('AddCommentUseCase', () => {
@@ -88,7 +88,7 @@ describe('AddCommentUseCase', () => {
     mockThreadRepository.verifyAvailableThread = jest
       .fn()
       .mockImplementation(() =>
-        Promise.reject(new InvariantError('thread tidak ditemukan'))
+        Promise.reject(new NotFoundError('thread tidak ditemukan'))
       )
 
     /** creating use case instance */
@@ -100,7 +100,13 @@ describe('AddCommentUseCase', () => {
 
     // Action and Assert
     await expect(addCommentUseCase.execute(useCasePayload)).rejects.toThrow(
-      InvariantError
+      NotFoundError
+    )
+    expect(mockUserRepository.verifyUserExists).toHaveBeenCalledWith(
+      useCasePayload.owner
+    )
+    expect(mockThreadRepository.verifyAvailableThread).toHaveBeenCalledWith(
+      useCasePayload.threadId
     )
   })
 })

@@ -54,11 +54,18 @@ describe('UserRepositoryPostgres', () => {
       )
 
       // Action
-      await userRepositoryPostgres.addUser(registerUser)
+      const registeredUser = await userRepositoryPostgres.addUser(registerUser)
 
       // Assert
       const users = await UsersTableTestHelper.findUsersById('user-123')
       expect(users).toHaveLength(1)
+      expect(registeredUser).toStrictEqual(
+        new RegisteredUser({
+          id: 'user-123',
+          username: 'dicoding',
+          fullname: 'Dicoding Indonesia'
+        })
+      )
     })
 
     it('should return registered user correctly', async () => {

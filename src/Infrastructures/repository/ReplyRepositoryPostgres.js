@@ -11,13 +11,6 @@ class ReplyRepositoryPostgres extends ReplyRepository {
   }
 
   async getRepliesByCommentIds(commentIds) {
-    //check if commentIds is an array and not empty
-    if (!Array.isArray(commentIds)) {
-      throw new Error(
-        'REPLY_REPOSITORY.GET_REPLIES_BY_COMMENT_IDS.NOT_AN_ARRAY'
-      )
-    }
-    if (commentIds.length === 0) return []
     const query = {
       text: `SELECT r.id, r.comment_id, r.content, r.date, u.username, r.is_deleted
              FROM replies AS r

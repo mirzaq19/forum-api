@@ -111,6 +111,9 @@ describe('GetThreadDetailUseCase', () => {
     expect(mockCommentRepository.getCommentsByThreadId).toHaveBeenCalledWith(
       useCasePayload.threadId
     )
+    expect(mockReplyRepository.getRepliesByCommentIds).toHaveBeenCalledWith([
+      mockComment.id
+    ])
     expect(threadDetail).toStrictEqual(expectedThreadDetail)
     expect(threadDetail).toBeInstanceOf(Object)
     expect(threadDetail).toHaveProperty('id')
