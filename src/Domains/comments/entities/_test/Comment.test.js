@@ -11,7 +11,7 @@ describe('a Comment entity', () => {
 
     // Action and Assert
     expect(() => new Comment(payload)).toThrow(
-      'DELETE_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY'
+      'COMMENT.NOT_CONTAIN_NEEDED_PROPERTY'
     )
   })
   it('should throw error when payload did not meet data type specification', () => {
@@ -26,7 +26,7 @@ describe('a Comment entity', () => {
 
     // Action and Assert
     expect(() => new Comment(payload)).toThrow(
-      'DELETE_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION'
+      'COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION'
     )
   })
   it('should return delete message when payload is_deleted is true', () => {
@@ -67,5 +67,57 @@ describe('a Comment entity', () => {
     expect(comment.username).toEqual(payload.username)
     expect(comment.date).toEqual(payload.date)
     expect(comment.content).toEqual(payload.content)
+  })
+
+  it('should throw error when replies is not an array', () => {
+    // Arrange
+    const payload = {
+      id: 'comment-123',
+      username: 'user-123',
+      date: '2023-10-01T12:00:00.000Z',
+      content: 'This is a comment',
+      is_deleted: false
+    }
+    const comment = new Comment(payload)
+
+    // Action and Assert
+    expect(() => comment.setReplies('not an array')).toThrow(
+      'COMMENT.REPLIES_NOT_ARRAY'
+    )
+  })
+
+  it('should throw error when replies is not an object', () => {
+    // Arrange
+    const payload = {
+      id: 'comment-123',
+      username: 'user-123',
+      date: '2023-10-01T12:00:00.000Z',
+      content: 'This is a comment',
+      is_deleted: false
+    }
+    const comment = new Comment(payload)
+
+    // Action and Assert
+    expect(() => comment.setReplies(['reply'])).toThrow(
+      'COMMENT.REPLIES_NOT_OBJECT'
+    )
+  })
+  it('should set replies correctly', () => {
+    // Arrange
+    const payload = {
+      id: 'comment-123',
+      username: 'user-123',
+      date: '2023-10-01T12:00:00.000Z',
+      content: 'This is a comment',
+      is_deleted: false
+    }
+    const comment = new Comment(payload)
+    const replies = [{ id: 'reply-123', content: 'Reply' }]
+
+    // Action
+    comment.setReplies(replies)
+
+    // Assert
+    expect(comment.replies).toEqual(replies)
   })
 })

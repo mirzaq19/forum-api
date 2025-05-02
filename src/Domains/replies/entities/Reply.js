@@ -1,4 +1,4 @@
-class Comment {
+class Reply {
   constructor(payload) {
     this._verifyPayload(payload)
 
@@ -7,12 +7,12 @@ class Comment {
     this.id = id
     this.username = username
     this.date = date
-    this.content = is_deleted ? '**komentar telah dihapus**' : content
+    this.content = is_deleted ? '**balasan telah dihapus**' : content
   }
 
   _verifyPayload({ id, username, date, content, is_deleted }) {
     if (!id || !username || !date || !content || is_deleted === undefined) {
-      throw new Error('COMMENT.NOT_CONTAIN_NEEDED_PROPERTY')
+      throw new Error('REPLY.NOT_CONTAIN_NEEDED_PROPERTY')
     }
 
     if (
@@ -22,19 +22,9 @@ class Comment {
       typeof content !== 'string' ||
       typeof is_deleted !== 'boolean'
     ) {
-      throw new Error('COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION')
+      throw new Error('REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION')
     }
-  }
-
-  setReplies(replies) {
-    if (!Array.isArray(replies)) {
-      throw new Error('COMMENT.REPLIES_NOT_ARRAY')
-    }
-    if (replies.some(reply => typeof reply !== 'object')) {
-      throw new Error('COMMENT.REPLIES_NOT_OBJECT')
-    }
-    this.replies = replies
   }
 }
 
-module.exports = Comment
+module.exports = Reply

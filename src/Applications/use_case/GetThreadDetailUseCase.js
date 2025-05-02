@@ -1,7 +1,10 @@
+const Reply = require('../../Domains/replies/entities/Reply.js')
+
 class GetThreadDetailUseCase {
-  constructor({ threadRepository, commentRepository }) {
+  constructor({ threadRepository, commentRepository, replyRepository }) {
     this._threadRepository = threadRepository
     this._commentRepository = commentRepository
+    this._replyRepository = replyRepository
   }
 
   async execute(useCasePayload) {
@@ -12,7 +15,18 @@ class GetThreadDetailUseCase {
     const comments = await this._commentRepository.getCommentsByThreadId(
       threadId
     )
+    const commentIds = comments.map(comment => comment.id)
+    const replies = await this._replyRepository.getRepliesByCommentIds(
+      commentIds
+    )
+    comments.forEach(comment => {
+      const commentReplies = replies
+        .filter(reply => reply.comment_id === comment.id)
+        .map(reply => new Reply({ ...reply, date: reply.date.toISOString() }))
+      comment.setReplies(commentReplies)
+    })
     thread.setComments(comments)
+
     return thread
   }
 

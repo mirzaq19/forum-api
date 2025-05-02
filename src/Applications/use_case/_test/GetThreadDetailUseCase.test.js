@@ -1,5 +1,7 @@
 const CommentRepository = require('../../../Domains/comments/CommentRepository.js')
 const Comment = require('../../../Domains/comments/entities/Comment.js')
+const Reply = require('../../../Domains/replies/entities/Reply.js')
+const ReplyRepository = require('../../../Domains/replies/ReplyRepository.js')
 const Thread = require('../../../Domains/threads/entities/Thread.js')
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository.js')
 const GetThreadDetailUseCase = require('../GetThreadDetailUseCase.js')
@@ -10,7 +12,8 @@ describe('GetThreadDetailUseCase', () => {
     const useCasePayload = {}
     const getThreadDetailUseCase = new GetThreadDetailUseCase({
       threadRepository: {},
-      commentRepository: {}
+      commentRepository: {},
+      replyRepository: {}
     })
 
     // Action and Assert
@@ -25,7 +28,8 @@ describe('GetThreadDetailUseCase', () => {
     }
     const getThreadDetailUseCase = new GetThreadDetailUseCase({
       threadRepository: {},
-      commentRepository: {}
+      commentRepository: {},
+      replyRepository: {}
     })
 
     // Action and Assert
@@ -46,19 +50,29 @@ describe('GetThreadDetailUseCase', () => {
       title: 'Thread Title',
       body: 'Thread Body',
       date: '2023-10-01T12:00:00.000Z',
-      username: 'user-123'
+      username: 'dicoding'
     }
     const mockComment = {
       id: 'comment-123',
-      username: 'user-123',
+      username: 'dicoding',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      is_deleted: false
+    }
+
+    const mockReply = {
+      id: 'reply-123',
+      comment_id: 'comment-123',
+      content: 'This is a reply',
+      date: new Date('2023-10-01T12:00:00.000Z'),
+      username: 'dicoding',
       is_deleted: false
     }
 
     /* creating dependency of usecase */
     const mockThreadRepository = new ThreadRepository()
     const mockCommentRepository = new CommentRepository()
+    const mockReplyRepository = new ReplyRepository()
 
     /* mocking needed function */
     mockThreadRepository.getThreadById = jest
@@ -67,10 +81,14 @@ describe('GetThreadDetailUseCase', () => {
     mockCommentRepository.getCommentsByThreadId = jest
       .fn()
       .mockImplementation(() => Promise.resolve([new Comment(mockComment)]))
+    mockReplyRepository.getRepliesByCommentIds = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve([mockReply]))
 
     const getThreadDetailUseCase = new GetThreadDetailUseCase({
       threadRepository: mockThreadRepository,
-      commentRepository: mockCommentRepository
+      commentRepository: mockCommentRepository,
+      replyRepository: mockReplyRepository
     })
 
     // Action
@@ -94,7 +112,16 @@ describe('GetThreadDetailUseCase', () => {
           id: mockComment.id,
           username: mockComment.username,
           date: mockComment.date,
-          content: mockComment.content
+          content: mockComment.content,
+          replies: [
+            new Reply({
+              id: 'reply-123',
+              content: 'This is a reply',
+              date: '2023-10-01T12:00:00.000Z',
+              username: 'dicoding',
+              is_deleted: false
+            })
+          ]
         }
       ]
     })
@@ -119,5 +146,10 @@ describe('GetThreadDetailUseCase', () => {
     expect(threadDetail.comments[0].username).toEqual(mockComment.username)
     expect(threadDetail.comments[0].date).toEqual(mockComment.date)
     expect(threadDetail.comments[0].content).toEqual(mockComment.content)
+    expect(threadDetail.comments[0].replies).toBeInstanceOf(Array)
+    expect(threadDetail.comments[0].replies[0]).toHaveProperty('id')
+    expect(threadDetail.comments[0].replies[0]).toHaveProperty('content')
+    expect(threadDetail.comments[0].replies[0]).toHaveProperty('date')
+    expect(threadDetail.comments[0].replies[0]).toHaveProperty('username')
   })
 })

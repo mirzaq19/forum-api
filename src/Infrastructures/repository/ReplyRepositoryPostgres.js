@@ -10,6 +10,27 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     this._idGenerator = idGenerator
   }
 
+  async getRepliesByCommentIds(commentIds) {
+    //check if commentIds is an array and not empty
+    if (!Array.isArray(commentIds)) {
+      throw new Error(
+        'REPLY_REPOSITORY.GET_REPLIES_BY_COMMENT_IDS.NOT_AN_ARRAY'
+      )
+    }
+    if (commentIds.length === 0) return []
+    const query = {
+      text: `SELECT r.id, r.comment_id, r.content, r.date, u.username, r.is_deleted
+             FROM replies AS r
+             LEFT JOIN users AS u ON u.id = r.owner
+             WHERE r.comment_id = ANY($1::text[])
+             ORDER BY r.date ASC`,
+      values: [commentIds]
+    }
+
+    const result = await this._pool.query(query)
+    return result.rows
+  }
+
   async addReply({ commentId, content, owner }) {
     const id = `reply-${this._idGenerator()}`
     const query = {

@@ -6,7 +6,7 @@ describe('ReplyRepository', () => {
     const replyRepository = new ReplyRepository()
 
     // Action and Assert
-    await expect(replyRepository.getRepliesByCommentId('')).rejects.toThrow(
+    await expect(replyRepository.getRepliesByCommentIds({})).rejects.toThrow(
       'REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     )
     await expect(replyRepository.addReply({})).rejects.toThrow(

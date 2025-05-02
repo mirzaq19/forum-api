@@ -754,6 +754,12 @@ describe('HTTP server', () => {
         content: 'dicoding indonesia',
         owner: 'user-123'
       })
+      await RepliesTableTestHelper.addReply({
+        id: 'reply-123',
+        commentId: 'comment-123',
+        content: 'dicoding indonesia',
+        owner: 'user-124'
+      })
     })
 
     it('should response 404 when threadId not found', async () => {
