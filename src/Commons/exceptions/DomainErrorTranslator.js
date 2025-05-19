@@ -87,6 +87,12 @@ DomainErrorTranslator._directories = {
   ),
   'REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
     'balasan tidak memenuhi spesifikasi tipe data'
+  ),
+  'NEW_COMMENT_LIKE.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'tidak dapat update comment like karena properti yang dibutuhkan tidak ada'
+  ),
+  'NEW_COMMENT_LIKE.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'tidak dapat update comment like karena tipe data tidak sesuai'
   )
 }
 

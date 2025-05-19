@@ -21,6 +21,7 @@ describe('a Comment entity', () => {
       username: true,
       date: '2023-10-01T12:00:00.000Z',
       content: {},
+      like_count: '100',
       is_deleted: 'true'
     }
 
@@ -36,6 +37,7 @@ describe('a Comment entity', () => {
       username: 'user-123',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      like_count: 0,
       is_deleted: true
     }
 
@@ -52,6 +54,7 @@ describe('a Comment entity', () => {
       username: 'user-123',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      like_count: 0,
       is_deleted: false
     }
 
@@ -63,10 +66,12 @@ describe('a Comment entity', () => {
     expect(comment).toHaveProperty('username')
     expect(comment).toHaveProperty('date')
     expect(comment).toHaveProperty('content')
+    expect(comment).toHaveProperty('likeCount')
     expect(comment.id).toEqual(payload.id)
     expect(comment.username).toEqual(payload.username)
     expect(comment.date).toEqual(payload.date)
     expect(comment.content).toEqual(payload.content)
+    expect(comment.likeCount).toEqual(payload.like_count)
   })
 
   it('should throw error when replies is not an array', () => {
@@ -76,6 +81,7 @@ describe('a Comment entity', () => {
       username: 'user-123',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      like_count: 0,
       is_deleted: false
     }
     const comment = new Comment(payload)
@@ -93,6 +99,7 @@ describe('a Comment entity', () => {
       username: 'user-123',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      like_count: 0,
       is_deleted: false
     }
     const comment = new Comment(payload)
@@ -109,6 +116,7 @@ describe('a Comment entity', () => {
       username: 'user-123',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      like_count: 0,
       is_deleted: false
     }
     const comment = new Comment(payload)

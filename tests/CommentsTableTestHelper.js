@@ -10,8 +10,8 @@ const CommentsTableTestHelper = {
     owner = 'user-123'
   } = {}) {
     const query = {
-      text: 'INSERT INTO comments VALUES($1, $2, $3, $4, $5) RETURNING id',
-      values: [id, threadId, content, date, owner]
+      text: 'INSERT INTO comments VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
+      values: [id, threadId, content, date, 0, owner]
     }
 
     const result = await pool.query(query)

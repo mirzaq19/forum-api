@@ -16,6 +16,7 @@ const JWTTokenManager = require('./security/JWTTokenManager.js')
 const ThreadRepositoryPostgres = require('./repository/ThreadRepositoryPostgres.js')
 const CommentRepositoryPostgres = require('./repository/CommentRepositoryPostgres.js')
 const ReplyRepositoryPostgres = require('./repository/ReplyRepositoryPostgres.js')
+const CommentLikeRepositoryPostgres = require('./repository/CommentLikeRepositoryPostgres.js')
 
 // use case
 const AddUserUseCase = require('../Applications/use_case/AddUserUseCase.js')
@@ -35,6 +36,8 @@ const GetThreadDetailUseCase = require('../Applications/use_case/GetThreadDetail
 const ReplyRepository = require('../Domains/replies/ReplyRepository.js')
 const AddReplyUseCase = require('../Applications/use_case/AddReplyUseCase.js')
 const DeleteReplyUseCase = require('../Applications/use_case/DeleteReplyUseCase.js')
+const CommentLikeRepository = require('../Domains/commentLikes/CommentLikeRepository.js')
+const ToggleCommentLikeUseCase = require('../Applications/use_case/ToggleCommentLikeUseCase.js')
 
 // creating container
 const container = createContainer()
@@ -100,6 +103,20 @@ container.register([
   {
     key: ReplyRepository.name,
     Class: ReplyRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool
+        },
+        {
+          concrete: nanoid
+        }
+      ]
+    }
+  },
+  {
+    key: CommentLikeRepository.name,
+    Class: CommentLikeRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -335,6 +352,31 @@ container.register([
         {
           name: 'replyRepository',
           internal: ReplyRepository.name
+        }
+      ]
+    }
+  },
+  {
+    key: ToggleCommentLikeUseCase.name,
+    Class: ToggleCommentLikeUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'userRepository',
+          internal: UserRepository.name
+        },
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name
+        },
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name
+        },
+        {
+          name: 'commentLikeRepository',
+          internal: CommentLikeRepository.name
         }
       ]
     }

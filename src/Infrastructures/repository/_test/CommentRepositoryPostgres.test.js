@@ -162,7 +162,25 @@ describe('CommentRepositoryPostgres', () => {
       expect(comments[0]).toHaveProperty('id', 'comment-123')
       expect(comments[0]).toHaveProperty('content', 'Comment Body')
       expect(comments[0]).toHaveProperty('date')
+      expect(comments[0]).toHaveProperty('likeCount', 0)
       expect(comments[0]).toHaveProperty('username', 'dicoding')
+    })
+  })
+
+  describe('updateCommentLikeCount function', () => {
+    it('should update comment like count', async () => {
+      // Arrange
+      const commentId = 'comment-123'
+      await CommentsTableTestHelper.addComment({ id: commentId })
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {})
+
+      // Action
+      await commentRepositoryPostgres.updateCommentLikeCount(commentId, 5)
+
+      // Assert
+      const comments = await CommentsTableTestHelper.findCommentsById(commentId)
+      expect(comments).toHaveLength(1)
+      expect(comments[0].like_count).toEqual(5)
     })
   })
 })
