@@ -9,39 +9,25 @@ exports.shorthands = undefined
  * @returns {Promise<void> | void}
  */
 exports.up = pgm => {
-  pgm.createTable('comments', {
+  pgm.createTable('comment_likes', {
     id: {
       type: 'VARCHAR(50)',
       primaryKey: true,
       unique: true,
       notNull: true
     },
-    thread_id: {
+    comment_id: {
       type: 'VARCHAR(50)',
       notNull: true
     },
-    content: {
-      type: 'TEXT',
+    owner: {
+      type: 'VARCHAR(50)',
       notNull: true
     },
     date: {
       type: 'TIMESTAMPTZ',
       notNull: true,
       default: pgm.func('current_timestamp')
-    },
-    like_count: {
-      type: 'INTEGER',
-      notNull: true,
-      default: 0
-    },
-    owner: {
-      type: 'VARCHAR(50)',
-      notNull: true
-    },
-    is_deleted: {
-      type: 'BOOLEAN',
-      notNull: true,
-      default: false
     }
   })
 }
@@ -52,5 +38,5 @@ exports.up = pgm => {
  * @returns {Promise<void> | void}
  */
 exports.down = pgm => {
-  pgm.dropTable('comments')
+  pgm.dropTable('comment_likes')
 }

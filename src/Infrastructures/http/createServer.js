@@ -5,6 +5,7 @@ const authentications = require('../../Interfaces/http/api/authentications/index
 const threads = require('../../Interfaces/http/api/threads/index.js')
 const comments = require('../../Interfaces/http/api/comments/index.js')
 const replies = require('../../Interfaces/http/api/replies/index.js')
+const commentLikes = require('../../Interfaces/http/api/commentLikes/index.js')
 const config = require('../../Commons/config.js')
 const setupMiddleware = require('./middleware.js')
 
@@ -56,6 +57,10 @@ const createServer = async container => {
     },
     {
       plugin: replies,
+      options: { container }
+    },
+    {
+      plugin: commentLikes,
       options: { container }
     }
   ])

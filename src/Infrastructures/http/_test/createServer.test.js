@@ -1188,4 +1188,174 @@ describe('HTTP server', () => {
       expect(responseJson.status).toEqual('success')
     })
   })
+
+  describe('when PUT /threads/{threadId}/comments/{commentId}/likes', () => {
+    beforeEach(async () => {
+      const passwordHash = new BcryptPasswordHash(bcrypt)
+      const plainPassword = 'secret'
+      const hashedPassword = await passwordHash.hash(plainPassword)
+      const user1Data = {
+        id: 'user-123',
+        username: 'dicoding',
+        password: hashedPassword
+      }
+      const user2Data = {
+        id: 'user-124',
+        username: 'dicoding2',
+        password: hashedPassword
+      }
+      await UsersTableTestHelper.addUser(user1Data)
+      await UsersTableTestHelper.addUser(user2Data)
+
+      await ThreadsTableTestHelper.addThread({
+        id: 'thread-123',
+        title: 'dicoding',
+        body: 'dicoding indonesia',
+        owner: 'user-123'
+      })
+
+      await CommentsTableTestHelper.addComment({
+        id: 'comment-123',
+        threadId: 'thread-123',
+        content: 'dicoding indonesia',
+        owner: 'user-124'
+      })
+
+      await RepliesTableTestHelper.addReply({
+        id: 'reply-123',
+        commentId: 'comment-123',
+        content: 'dicoding indonesia',
+        owner: 'user-124'
+      })
+    })
+
+    it('should response 401 when request not contain authentication', async () => {
+      // Arrange
+      const server = await createServer(container)
+
+      // Action
+      const response = await server.inject({
+        method: 'PUT',
+        url: '/threads/thread-123/comments/comment-123/likes'
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(401)
+      expect(responseJson.message).toEqual('Missing authentication')
+    })
+
+    it('should response 404 when threadId not found', async () => {
+      // Arrange
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'PUT',
+        url: '/threads/123/comments/comment-123/likes',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(404)
+      expect(responseJson.status).toEqual('fail')
+      expect(responseJson.message).toEqual('thread tidak ditemukan')
+    })
+
+    it('should response 404 when commentId not found', async () => {
+      // Arrange
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'PUT',
+        url: '/threads/thread-123/comments/123/likes',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(404)
+      expect(responseJson.status).toEqual('fail')
+      expect(responseJson.message).toEqual('comment tidak ditemukan')
+    })
+
+    it('should response 200 and like comment', async () => {
+      // Arrange
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding2',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'PUT',
+        url: '/threads/thread-123/comments/comment-123/likes',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(200)
+      expect(responseJson.status).toEqual('success')
+    })
+    it('should response 200 and unlike comment', async () => {
+      // Arrange
+      const server = await createServer(container)
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'dicoding2',
+          password: 'secret'
+        }
+      })
+      const { accessToken } = JSON.parse(loginResponse.payload).data
+
+      // Action
+      const response = await server.inject({
+        method: 'PUT',
+        url: '/threads/thread-123/comments/comment-123/likes',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(200)
+      expect(responseJson.status).toEqual('success')
+    })
+  })
 })

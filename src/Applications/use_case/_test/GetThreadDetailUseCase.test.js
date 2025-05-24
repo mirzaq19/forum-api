@@ -57,6 +57,7 @@ describe('GetThreadDetailUseCase', () => {
       username: 'dicoding',
       date: '2023-10-01T12:00:00.000Z',
       content: 'This is a comment',
+      like_count: 0,
       is_deleted: false
     }
 
@@ -132,6 +133,7 @@ describe('GetThreadDetailUseCase', () => {
     expect(threadDetail.comments[0]).toHaveProperty('username')
     expect(threadDetail.comments[0]).toHaveProperty('date')
     expect(threadDetail.comments[0]).toHaveProperty('content')
+    expect(threadDetail.comments[0]).toHaveProperty('likeCount')
     expect(threadDetail.comments[0].id).toEqual(mockComment.id)
     expect(threadDetail.comments[0].username).toEqual(mockComment.username)
     expect(threadDetail.comments[0].date).toEqual(mockComment.date)

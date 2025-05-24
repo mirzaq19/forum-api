@@ -15,8 +15,8 @@ class CommentRepositoryPostgres extends CommentRepository {
     const id = `comment-${this._idGenerator()}`
 
     const query = {
-      text: 'INSERT INTO comments VALUES($1, $2, $3, $4, $5) RETURNING id, content, owner',
-      values: [id, threadId, content, new Date().toISOString(), owner]
+      text: 'INSERT INTO comments VALUES($1, $2, $3, $4, $5, $6) RETURNING id, content, owner',
+      values: [id, threadId, content, new Date().toISOString(), 0, owner]
     }
 
     const result = await this._pool.query(query)
@@ -67,7 +67,7 @@ class CommentRepositoryPostgres extends CommentRepository {
   async getCommentsByThreadId(threadId) {
     const query = {
       text: `
-        SELECT c.id, c.content, c.date, u.username, c.is_deleted
+        SELECT c.id, c.content, c.date, c.like_count, u.username, c.is_deleted
         FROM comments AS c
         JOIN users AS u ON c.owner = u.id
         WHERE c.thread_id = $1
@@ -84,6 +84,15 @@ class CommentRepositoryPostgres extends CommentRepository {
           date: row.date.toISOString()
         })
     )
+  }
+
+  async updateCommentLikeCount(commentId, likeCount) {
+    const query = {
+      text: 'UPDATE comments SET like_count = $1 WHERE id = $2',
+      values: [likeCount, commentId]
+    }
+
+    await this._pool.query(query)
   }
 }
 
