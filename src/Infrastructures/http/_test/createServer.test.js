@@ -34,6 +34,25 @@ describe('HTTP server', () => {
     expect(response.statusCode).toEqual(404)
   })
 
+  describe('when GET /', () => {
+    it('should response 200 and return "Hello, world!"', async () => {
+      // Arrange
+      const server = await createServer(container)
+
+      // Action
+      const response = await server.inject({
+        method: 'GET',
+        url: '/'
+      })
+
+      // Assert
+      const responseJson = JSON.parse(response.payload)
+      expect(response.statusCode).toEqual(200)
+      expect(responseJson.status).toEqual('success')
+      expect(responseJson.message).toEqual('Hello, World!')
+    })
+  })
+
   describe('when POST /users', () => {
     it('should response 201 and persisted user', async () => {
       // Arrange
